@@ -1,5 +1,5 @@
 <template>
-    <h1>Home</h1>
+    <h1>Settings</h1>
 
     <nav>
         <ul>
@@ -15,7 +15,7 @@
 
     export default {
 
-        name: 'Home',
+        name: 'Settings',
 
         components: {
             Link,
