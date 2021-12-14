@@ -19,6 +19,8 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/users', function () {
+    sleep(2);
+
     return Inertia::render('Users');
 })->name('users');
 
