@@ -22,13 +22,13 @@
                                         <Link
                                             :href="item.href"
                                             :class="[
-                                                item.current
+                                                $page.url.startsWith(item.href)
                                                     ? 'bg-sky-700'
                                                     : 'hover:bg-sky-500 hover:bg-opacity-75',
                                                 'text-sm font-medium px-3 py-2 rounded-md',
                                             ]"
                                             :aria-current="
-                                                item.current
+                                                $page.url.startsWith(item.href)
                                                     ? 'page'
                                                     : undefined
                                             "
@@ -215,6 +215,9 @@
                                                 <Link
                                                     :href="item.href"
                                                     :method="item.method"
+                                                    :data="{
+                                                        userId: 1,
+                                                    }"
                                                     as="button"
                                                     :class="[
                                                         active
@@ -287,12 +290,14 @@
                         :key="item.name"
                         :href="item.href"
                         :class="[
-                            item.current
+                            $page.url.startsWith(item.href)
                                 ? 'bg-sky-700 text-white'
                                 : 'text-white hover:bg-sky-500 hover:bg-opacity-75',
                             'block px-3 py-2 rounded-md text-base font-medium',
                         ]"
-                        :aria-current="item.current ? 'page' : undefined"
+                        :aria-current="
+                            $page.url.startsWith(item.href) ? 'page' : undefined
+                        "
                     >
                         {{ item.name }}
                     </Link>
@@ -336,7 +341,11 @@
                             <BellIcon class="h-6 w-6" aria-hidden="true" />
                         </button>
                     </div>
-                    <div v-for="item in userNavigation" :key="item.name" class="mt-3 px-2 space-y-1">
+                    <div
+                        v-for="item in userNavigation"
+                        :key="item.name"
+                        class="mt-3 px-2 space-y-1"
+                    >
                         <Link
                             v-if="item.method"
                             :method="item.method"
@@ -393,32 +402,6 @@ import { BellIcon, MenuIcon, XIcon } from "@heroicons/vue/outline";
 import { ChevronDownIcon } from "@heroicons/vue/solid";
 import Logo from "./Logo";
 
-const navigation = [
-    { name: "Dashboard", href: "/", current: false },
-    { name: "Grupos", href: "/settings", current: false },
-    { name: "Controle de Acesso", href: "/users", current: true },
-    { name: "Firewall", href: "/", current: false },
-    { name: "VPN Empresarial", href: "/settings", current: false },
-    { name: "Relatórios", href: "/", current: false },
-];
-
-const dropDownNavigation = [
-    { name: "Velocidade", href: "/", current: false },
-    { name: "separator", href: "#", current: false },
-    { name: "Redes", href: "/", current: false },
-    { name: "Equipamentos", href: "/", current: false },
-    { name: "Usuários", href: "/", current: false },
-    { name: "separator", href: "#", current: false },
-    { name: "Registros DNS locais", href: "/", current: false },
-    { name: "Compatibilidade AD", href: "/", current: false },
-    { name: "Endereços MAC liberados", href: "/", current: false },
-];
-
-const userNavigation = [
-    { name: "Settings", href: "/settings" },
-    { name: "Sign out", href: "/logout", method: "post" },
-];
-
 export default {
     components: {
         Link,
@@ -437,12 +420,93 @@ export default {
     },
 
     data() {
+        const navigation = [
+            {
+                name: "Dashboard",
+                href: "/",
+            },
+            {
+                name: "Grupos",
+                href: "/settings",
+            },
+            {
+                name: "Controle de Acesso",
+                href: "/users",
+            },
+            {
+                name: "Firewall",
+                href: "/",
+            },
+            {
+                name: "VPN Empresarial",
+                href: "/settings",
+            },
+            {
+                name: "Relatórios",
+                href: "/",
+            },
+        ];
+
+        const dropDownNavigation = [
+            {
+                name: "Velocidade",
+                href: "/",
+            },
+            {
+                name: "separator",
+                href: "#",
+            },
+            {
+                name: "Redes",
+                href: "/",
+            },
+            {
+                name: "Equipamentos",
+                href: "/",
+            },
+            {
+                name: "Usuários",
+                href: "/users",
+            },
+            {
+                name: "separator",
+                href: "#",
+            },
+            {
+                name: "Registros DNS locais",
+                href: "/",
+            },
+            {
+                name: "Compatibilidade AD",
+                href: "/",
+            },
+            {
+                name: "Endereços MAC liberados",
+                href: "/",
+            },
+        ];
+
+        const userNavigation = [
+            {
+                name: "Settings",
+                href: "/settings",
+            },
+            {
+                name: "Sign out",
+                href: "/logout",
+                method: "post",
+            },
+        ];
+
         return {
             user: {
                 name: "Werner Luiz Gottschalt",
                 email: "werner@lumiun.com",
                 imageUrl: "",
             },
+            navigation,
+            userNavigation,
+            dropDownNavigation,
         };
     },
 
@@ -450,13 +514,13 @@ export default {
         this.generateUserAvatar();
     },
 
-    setup() {
-        return {
-            navigation,
-            userNavigation,
-            dropDownNavigation,
-        };
-    },
+    // setup() {
+    //     return {
+    //         navigation,
+    //         userNavigation,
+    //         dropDownNavigation,
+    //     };
+    // },
 
     methods: {
         generateUserAvatar() {

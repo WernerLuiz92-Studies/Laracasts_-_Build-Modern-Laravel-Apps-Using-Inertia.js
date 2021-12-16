@@ -5,7 +5,7 @@
 
     <header>
         <!-- Page Banner -->
-        <Banner> Home </Banner>
+        <Banner> Dashboard </Banner>
         <!-- /End Page Banner -->
     </header>
 
@@ -31,7 +31,7 @@ import Banner from "../Shared/Banner";
 import Nav from "../Shared/Nav";
 
 export default {
-    name: "Home",
+    name: "Dashboard",
 
     components: {
         Banner,
