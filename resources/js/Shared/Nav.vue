@@ -1,7 +1,7 @@
 <template>
     <div class="min-h-full">
-        <Disclosure as="nav" class="bg-blue-600" v-slot="{ open }">
-            <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <Disclosure as="nav" class="bg-sky-600" v-slot="{ open }">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-16">
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
@@ -10,7 +10,7 @@
                             </Link>
                         </div>
                         <div class="hidden lg:block">
-                            <div class="ml-3 flex items-baseline space-x-4">
+                            <div class="ml-3 flex items-baseline space-x-2">
                                 <span class="sr-only"
                                     >Itens do menu de navegação:</span
                                 >
@@ -23,8 +23,8 @@
                                             :href="item.href"
                                             :class="[
                                                 item.current
-                                                    ? 'bg-blue-700'
-                                                    : 'hover:bg-blue-500 hover:bg-opacity-75',
+                                                    ? 'bg-sky-700'
+                                                    : 'hover:bg-sky-500 hover:bg-opacity-75',
                                                 'text-sm font-medium px-3 py-2 rounded-md',
                                             ]"
                                             :aria-current="
@@ -47,7 +47,7 @@
                                                 flex
                                                 items-center
                                                 text-white
-                                                hover:bg-blue-500
+                                                hover:bg-sky-500
                                                 hover:bg-opacity-75
                                             "
                                         >
@@ -63,7 +63,7 @@
                                                     h-5
                                                     w-5
                                                     fill-current
-                                                    text-blue-200
+                                                    text-sky-200
                                                 "
                                                 aria-hidden="true"
                                             />
@@ -133,10 +133,10 @@
                             <button
                                 type="button"
                                 class="
-                                    bg-blue-600
+                                    bg-sky-600
                                     p-1
                                     rounded-full
-                                    text-blue-200
+                                    text-sky-200
                                     hover:text-white
                                     focus:outline-none
                                 "
@@ -152,7 +152,7 @@
                                         class="
                                             p-1
                                             max-w-xs
-                                            bg-blue-600
+                                            bg-sky-600
                                             rounded-full
                                             flex
                                             items-center
@@ -177,7 +177,7 @@
                                                 h-5
                                                 w-5
                                                 fill-current
-                                                text-blue-200
+                                                text-sky-200
                                             "
                                             aria-hidden="true"
                                         />
@@ -247,20 +247,20 @@
                         <!-- Mobile menu button -->
                         <DisclosureButton
                             class="
-                                bg-blue-600
+                                bg-sky-600
                                 inline-flex
                                 items-center
                                 justify-center
                                 p-2
                                 rounded-md
-                                text-blue-200
+                                text-sky-200
                                 hover:text-white
-                                hover:bg-blue-500
+                                hover:bg-sky-500
                                 hover:bg-opacity-75
                                 focus:outline-none
                                 focus:ring-2
                                 focus:ring-offset-2
-                                focus:ring-offset-blue-600
+                                focus:ring-offset-sky-600
                                 focus:ring-white
                             "
                         >
@@ -288,8 +288,8 @@
                         :href="item.href"
                         :class="[
                             item.current
-                                ? 'bg-blue-700 text-white'
-                                : 'text-white hover:bg-blue-500 hover:bg-opacity-75',
+                                ? 'bg-sky-700 text-white'
+                                : 'text-white hover:bg-sky-500 hover:bg-opacity-75',
                             'block px-3 py-2 rounded-md text-base font-medium',
                         ]"
                         :aria-current="item.current ? 'page' : undefined"
@@ -297,7 +297,7 @@
                         {{ item.name }}
                     </Link>
                 </div>
-                <div class="pt-4 pb-3 border-t border-blue-700">
+                <div class="pt-4 pb-3 border-t border-sky-700">
                     <div class="flex items-center px-5">
                         <div class="flex-shrink-0">
                             <img
@@ -310,7 +310,7 @@
                             <div class="text-base font-medium text-white">
                                 {{ user.name }}
                             </div>
-                            <div class="text-sm font-medium text-blue-300">
+                            <div class="text-sm font-medium text-sky-300">
                                 {{ user.email }}
                             </div>
                         </div>
@@ -318,17 +318,17 @@
                             type="button"
                             class="
                                 ml-auto
-                                bg-blue-600
+                                bg-sky-600
                                 flex-shrink-0
                                 p-1
                                 border-2 border-transparent
                                 rounded-full
-                                text-blue-200
+                                text-sky-200
                                 hover:text-white
                                 focus:outline-none
                                 focus:ring-2
                                 focus:ring-offset-2
-                                focus:ring-offset-blue-600
+                                focus:ring-offset-sky-600
                                 focus:ring-white
                             "
                         >
@@ -350,7 +350,7 @@
                                 text-base
                                 font-medium
                                 text-white
-                                hover:bg-blue-500 hover:bg-opacity-75
+                                hover:bg-sky-500 hover:bg-opacity-75
                             "
                         >
                             {{ item.name }}
@@ -366,7 +366,7 @@
                                 text-base
                                 font-medium
                                 text-white
-                                hover:bg-blue-500 hover:bg-opacity-75
+                                hover:bg-sky-500 hover:bg-opacity-75
                             "
                         >
                             {{ item.name }}
