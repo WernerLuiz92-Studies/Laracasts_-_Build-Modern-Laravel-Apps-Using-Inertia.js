@@ -1,8 +1,9 @@
 <template>
     <div class="min-h-full">
         <Disclosure as="nav" class="bg-sky-600" v-slot="{ open }">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex items-center justify-between h-16">
+            <div class="container mx-auto px-6 lg:px-8">
+                <div class="relative flex items-center justify-between h-16">
+                    <!-- Mobile Menu Hamburger -->
                     <div
                         class="
                             absolute
@@ -10,10 +11,9 @@
                             left-0
                             flex
                             items-center
-                            sm:hidden
+                            lg:hidden
                         "
                     >
-                        <!-- Mobile menu button -->
                         <DisclosureButton
                             class="
                                 inline-flex
@@ -21,15 +21,17 @@
                                 justify-center
                                 p-2
                                 rounded-md
-                                text-gray-400
-                                hover:text-gray-500 hover:bg-gray-100
+                                text-sky-200
+                                hover:text-white
+                                hover:bg-sky-500
+                                hover:bg-opacity-75
                                 focus:outline-none
                                 focus:ring-2
                                 focus:ring-inset
-                                focus:ring-indigo-500
+                                focus:ring-white
                             "
                         >
-                            <span class="sr-only">Open main menu</span>
+                            <span class="sr-only">Abrir o menu</span>
                             <MenuIcon
                                 v-if="!open"
                                 class="block h-6 w-6"
@@ -42,12 +44,26 @@
                             />
                         </DisclosureButton>
                     </div>
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
+                    <!-- /Mobile Menu Hamburger -->
+
+                    <div
+                        class="
+                            flex-1 flex
+                            lg:flex-none
+                            items-center
+                            justify-center
+                            lg:justify-arround
+                        "
+                    >
+                        <!-- Logo -->
+                        <div class="flex-shrink-0 flex items-center">
                             <Link href="/">
                                 <Logo class="h-6" alt="Logo da Empresa" />
                             </Link>
                         </div>
+                        <!-- /Logo -->
+
+                        <!-- Nav Key Links -->
                         <div class="hidden lg:block">
                             <div class="ml-3 flex items-baseline space-x-2">
                                 <span class="sr-only"
@@ -71,11 +87,11 @@
                                                     ? 'page'
                                                     : undefined
                                             "
+                                            >{{ item.name }}</Link
                                         >
-                                            {{ item.name }}
-                                        </Link>
                                     </div>
                                 </div>
+                                <!-- Nav More Links -->
                                 <Menu as="div" class="relative">
                                     <div>
                                         <MenuButton
@@ -164,87 +180,118 @@
                                         </MenuItems>
                                     </transition>
                                 </Menu>
+                                <!-- /Nav More Links -->
                             </div>
                         </div>
+                        <!-- /Nav Key Links -->
                     </div>
-                    <div class="hidden lg:block">
-                        <div class="ml-4 flex items-center lg:ml-6">
-                            <button
-                                type="button"
-                                class="
-                                    bg-sky-600
-                                    p-1
-                                    rounded-full
-                                    text-sky-200
-                                    hover:text-white
-                                    focus:outline-none
-                                "
-                            >
-                                <span class="sr-only">Ver Notificações</span>
-                                <BellIcon class="h-6 w-6" aria-hidden="true" />
-                            </button>
 
-                            <!-- Profile dropdown -->
-                            <Menu as="div" class="ml-3 relative">
-                                <div>
-                                    <MenuButton
-                                        class="
-                                            p-1
-                                            max-w-xs
-                                            bg-sky-600
-                                            rounded-full
-                                            flex
-                                            items-center
-                                            text-sm text-white
-                                            focus:outline-none
-                                        "
-                                    >
-                                        <span class="sr-only"
-                                            >Abrir menu do usuário</span
-                                        >
-                                        <img
-                                            class="h-8 w-8 rounded-full"
-                                            :src="user.imageUrl"
-                                            alt=""
-                                        />
-                                        <span class="ml-2"
-                                            >Empresa de Exemplo</span
-                                        >
-                                        <ChevronDownIcon
-                                            class="
-                                                ml-3
-                                                h-5
-                                                w-5
-                                                fill-current
-                                                text-sky-200
-                                            "
-                                            aria-hidden="true"
-                                        />
-                                    </MenuButton>
-                                </div>
-                                <transition
-                                    enter-active-class="transition ease-out duration-100"
-                                    enter-from-class="transform opacity-0 scale-95"
-                                    enter-to-class="transform opacity-100 scale-100"
-                                    leave-active-class="transition ease-in duration-75"
-                                    leave-from-class="transform opacity-100 scale-100"
-                                    leave-to-class="transform opacity-0 scale-95"
+                    <div
+                        class="
+                            absolute
+                            inset-y-0
+                            right-0
+                            flex
+                            items-center
+                            pr-2
+                            lg:static lg:inset-auto lg:ml-6 lg:pr-0
+                        "
+                    >
+                        <!-- Notifications Button -->
+                        <button
+                            type="button"
+                            class="
+                                bg-sky-600
+                                rounded-full
+                                text-sky-200
+                                hover:text-white
+                                focus:outline-none
+                                focus:ring-2
+                                focus:ring-offset-2
+                                focus:ring-offset-sky-600
+                                focus:ring-white
+                                lg:p-1
+                                lg:focus:ring-0
+                                lg:focus:ring-offset-0
+                                lg:rounded-md
+                            "
+                        >
+                            <span class="sr-only">Ver Notificações</span>
+                            <BellIcon class="h-6 w-6" aria-hidden="true" />
+                        </button>
+                        <!-- /Notifications Button -->
+
+                        <!-- Profile Dropdown -->
+                        <Menu as="div" class="ml-3 relative">
+                            <div>
+                                <MenuButton
+                                    class="
+                                        bg-sky-600
+                                        flex
+                                        items-center
+                                        text-sm text-white
+                                        rounded-full
+                                        focus:outline-none
+                                        focus:ring-2
+                                        focus:ring-offset-2
+                                        focus:ring-offset-sky-600
+                                        focus:ring-white
+                                        lg:p-1
+                                        lg:focus:ring-0
+                                        lg:focus:ring-offset-0
+                                        lg:rounded-md
+                                    "
                                 >
-                                    <MenuItems
-                                        class="
-                                            origin-top-right
-                                            absolute
-                                            right-0
-                                            mt-2
-                                            w-48
-                                            rounded-md
-                                            shadow-lg
-                                            py-1
-                                            bg-white
-                                            ring-1 ring-black ring-opacity-5
-                                            focus:outline-none
-                                        "
+                                    <span class="sr-only">
+                                        Abrir menu do usuário
+                                    </span>
+                                    <img
+                                        class="h-8 w-8 rounded-full"
+                                        :src="user.imageUrl"
+                                        alt=""
+                                    />
+                                    <span class="hidden xl:block ml-2"
+                                        >Empresa de Exemplo</span
                                     >
+                                    <ChevronDownIcon
+                                        class="
+                                            hidden
+                                            ml-3
+                                            h-5
+                                            w-5
+                                            fill-current
+                                            text-sky-200
+                                            lg:block
+                                        "
+                                        aria-hidden="true"
+                                    />
+                                </MenuButton>
+                            </div>
+                            <transition
+                                enter-active-class="transition ease-out duration-100"
+                                enter-from-class="transform opacity-0 scale-95"
+                                enter-to-class="transform opacity-100 scale-100"
+                                leave-active-class="transition ease-in duration-75"
+                                leave-from-class="transform opacity-100 scale-100"
+                                leave-to-class="transform opacity-0 scale-95"
+                            >
+                                <MenuItems
+                                    class="
+                                        origin-top-right
+                                        absolute
+                                        right-0
+                                        mt-2
+                                        w-48
+                                        rounded-md
+                                        shadow-lg
+                                        py-1
+                                        bg-white
+                                        ring-1 ring-black ring-opacity-5
+                                        focus:outline-none
+                                        divide-y divide-gray-100
+                                    "
+                                >
+                                    <div>
                                         <MenuItem
                                             v-for="item in userNavigation"
                                             :key="item.name"
@@ -259,9 +306,7 @@
                                                     }"
                                                     as="button"
                                                     :class="[
-                                                        active
-                                                            ? 'bg-gray-100'
-                                                            : '',
+                                                        active ? 'bg-gray-100' : '',
                                                         'block w-full text-left px-4 py-2 text-sm text-gray-700',
                                                     ]"
                                                 >
@@ -279,20 +324,20 @@
                                                 {{ item.name }}
                                             </Link>
                                         </MenuItem>
-                                    </MenuItems>
-                                </transition>
-                            </Menu>
-                            <!-- /Profile dropdown -->
-                        </div>
+                                    </div>
+                                </MenuItems>
+                            </transition>
+                        </Menu>
+                        <!-- /Profile Dropdown -->
                     </div>
                 </div>
             </div>
 
-            <!-- Menu Mobile -->
-            <DisclosurePanel class="sm:hidden">
-                <div class="pt-2 pb-4 space-y-1">
+            <!-- Mobile Menu -->
+            <DisclosurePanel class="lg:hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1">
                     <Link
-                        v-for="item in mobileNavigation"
+                        v-for="item in navigation"
                         :key="item.name"
                         :href="item.href"
                         :class="[
@@ -309,88 +354,7 @@
                     </Link>
                 </div>
             </DisclosurePanel>
-            <!-- /Menu Mobile -->
-
-            <!-- <div class="pt-4 pb-3 border-t border-sky-700">
-                    <div class="flex items-center px-5">
-                        <div class="flex-shrink-0">
-                            <img
-                                class="h-10 w-10 rounded-full"
-                                :src="user.imageUrl"
-                                alt=""
-                            />
-                        </div>
-                        <div class="ml-3">
-                            <div class="text-base font-medium text-white">
-                                {{ user.name }}
-                            </div>
-                            <div class="text-sm font-medium text-sky-300">
-                                {{ user.email }}
-                            </div>
-                        </div>
-                        <button
-                            type="button"
-                            class="
-                                ml-auto
-                                bg-sky-600
-                                flex-shrink-0
-                                p-1
-                                border-2 border-transparent
-                                rounded-full
-                                text-sky-200
-                                hover:text-white
-                                focus:outline-none
-                                focus:ring-2
-                                focus:ring-offset-2
-                                focus:ring-offset-sky-600
-                                focus:ring-white
-                            "
-                        >
-                            <span class="sr-only">View notifications</span>
-                            <BellIcon class="h-6 w-6" aria-hidden="true" />
-                        </button>
-                    </div>
-                    <div
-                        v-for="item in userNavigation"
-                        :key="item.name"
-                        class="mt-3 px-2 space-y-1"
-                    >
-                        <Link
-                            v-if="item.method"
-                            :method="item.method"
-                            as="button"
-                            :href="item.href"
-                            class="
-                                block
-                                px-3
-                                py-2
-                                rounded-md
-                                text-base
-                                font-medium
-                                text-white
-                                hover:bg-sky-500 hover:bg-opacity-75
-                            "
-                        >
-                            {{ item.name }}
-                        </Link>
-                        <Link
-                            v-else
-                            :href="item.href"
-                            class="
-                                block
-                                px-3
-                                py-2
-                                rounded-md
-                                text-base
-                                font-medium
-                                text-white
-                                hover:bg-sky-500 hover:bg-opacity-75
-                            "
-                        >
-                            {{ item.name }}
-                        </Link>
-                    </div>
-                </div> -->
+            <!-- /Mobile Menu -->
         </Disclosure>
     </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
     <!-- Nav -->
-    <NavNew />
+    <Nav />
     <!-- /End Nav -->
 
     <header>
@@ -28,14 +28,14 @@
 
 <script>
 import Banner from "../Shared/Banner";
-import NavNew from "../Shared/NavNew";
+import Nav from "../Shared/Nav";
 
 export default {
     name: "LocalGroups",
 
     components: {
         Banner,
-        NavNew,
+        Nav,
     },
 };
 </script>
