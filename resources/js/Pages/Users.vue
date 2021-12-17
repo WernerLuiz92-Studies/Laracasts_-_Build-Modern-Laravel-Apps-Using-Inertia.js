@@ -5,7 +5,7 @@
 
     <header>
         <!-- Page Banner -->
-        <Banner> Users </Banner>
+        <Banner> Usuários </Banner>
         <!-- /End Page Banner -->
     </header>
 

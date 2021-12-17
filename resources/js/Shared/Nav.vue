@@ -423,34 +423,34 @@ export default {
         const navigation = [
             {
                 name: "Dashboard",
-                href: "/",
+                href: "/dashboard",
             },
             {
                 name: "Grupos",
-                href: "/settings",
+                href: "/localgroups",
             },
             {
                 name: "Controle de Acesso",
-                href: "/users",
+                href: "/access_control",
             },
             {
                 name: "Firewall",
-                href: "/",
+                href: "/firewall",
             },
             {
                 name: "VPN Empresarial",
-                href: "/settings",
+                href: "/vpns",
             },
             {
                 name: "Relatórios",
-                href: "/",
+                href: "/reports",
             },
         ];
 
         const dropDownNavigation = [
             {
                 name: "Velocidade",
-                href: "/",
+                href: "/traffic_control",
             },
             {
                 name: "separator",
@@ -458,11 +458,11 @@ export default {
             },
             {
                 name: "Redes",
-                href: "/",
+                href: "/networks",
             },
             {
                 name: "Equipamentos",
-                href: "/",
+                href: "/clientips",
             },
             {
                 name: "Usuários",
@@ -474,22 +474,22 @@ export default {
             },
             {
                 name: "Registros DNS locais",
-                href: "/",
+                href: "/networks/custom_dns_record",
             },
             {
                 name: "Compatibilidade AD",
-                href: "/",
+                href: "/networks/conditional_forwarding_dns",
             },
             {
                 name: "Endereços MAC liberados",
-                href: "/",
+                href: "/clientips/ignored_macs",
             },
         ];
 
         const userNavigation = [
             {
                 name: "Settings",
-                href: "/settings",
+                href: "/users/settings",
             },
             {
                 name: "Sign out",

@@ -5,7 +5,7 @@
 
     <header>
         <!-- Page Banner -->
-        <Banner> Dashboard </Banner>
+        <Banner> Registros DNS locais </Banner>
         <!-- /End Page Banner -->
     </header>
 
@@ -31,7 +31,7 @@ import Banner from "../Shared/Banner";
 import Nav from "../Shared/Nav";
 
 export default {
-    name: "Dashboard",
+    name: "CustomDnsRecord",
 
     components: {
         Banner,
