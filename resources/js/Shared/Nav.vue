@@ -81,7 +81,7 @@
                                             :class="[
                                                 $page.url.startsWith(item.href)
                                                     ? 'bg-light-blue-600'
-                                                    : 'hover:bg-light-blue-600 hover:bg-opacity-75',
+                                                    : 'hover:bg-light-blue-600 hover:bg-opacity-60',
                                                 'text-sm font-medium leading-5 px-3 py-2 rounded-md',
                                             ]"
                                             :aria-current="
@@ -105,7 +105,7 @@
                                                 items-center
                                                 text-white
                                                 hover:bg-light-blue-600
-                                                hover:bg-opacity-75
+                                                hover:bg-opacity-60
                                             "
                                         >
                                             <span class="sr-only"
@@ -224,6 +224,7 @@
                                     class="
                                         bg-blue-600
                                         hover:bg-light-blue-600
+                                        hover:bg-opacity-60
                                         flex
                                         items-center
                                         text-sm text-white
@@ -233,7 +234,7 @@
                                         focus:ring-offset-2
                                         focus:ring-offset-blue-600
                                         focus:ring-white
-                                        w-[13.5rem]
+                                        xl:w-[13.5rem]
                                         lg:p-1
                                         lg:focus:ring-0
                                         lg:focus:ring-offset-0
@@ -244,7 +245,7 @@
                                         Abrir menu do usuário
                                     </span>
                                     <img
-                                        class="h-8 w-8 mr-2 rounded-full"
+                                        class="h-8 w-8 lg:mr-2 rounded-full"
                                         :src="user.imageUrl"
                                         alt=""
                                     />
@@ -254,7 +255,7 @@
                                             xl:block
                                             truncate
                                             ...
-                                            w-[8.75rem]
+                                            xl:w-[8.75rem]
                                         "
                                         >{{ client.name }}</span
                                     >
@@ -391,23 +392,58 @@
 
             <!-- Mobile Menu -->
             <DisclosurePanel class="lg:hidden">
-                <div class="px-2 pt-2 pb-3 space-y-1">
-                    <Link
-                        v-for="item in navigation"
-                        :key="item.name"
-                        :href="item.href"
-                        :class="[
-                            $page.url.startsWith(item.href)
-                                ? 'bg-light-blue-700 text-white'
-                                : 'text-white hover:bg-light-blue-500 hover:bg-opacity-75',
-                            'block px-3 py-2 rounded-md text-base font-medium',
-                        ]"
-                        :aria-current="
-                            $page.url.startsWith(item.href) ? 'page' : undefined
-                        "
+                <div
+                    class="
+                        px-2
+                        pt-2
+                        pb-3
+                        divide-y divide-gray-100 divide-opacity-20
+                    "
+                >
+                    <div class="mx-2 py-1">
+                        <Link
+                            v-for="item in navigation.keyLinks"
+                            :key="item.name"
+                            :href="item.href"
+                            :class="[
+                                $page.url.startsWith(item.href)
+                                    ? 'bg-light-blue-600 text-white'
+                                    : 'text-white hover:bg-light-blue-600 hover:bg-opacity-60',
+                                'block px-3 py-2 rounded-md text-base font-medium',
+                            ]"
+                            :aria-current="
+                                $page.url.startsWith(item.href)
+                                    ? 'page'
+                                    : undefined
+                            "
+                        >
+                            {{ item.name }}
+                        </Link>
+                    </div>
+                    <div
+                        class="mx-2 py-1"
+                        v-for="(links, index) in navigation.moreLinks"
+                        :key="index"
                     >
-                        {{ item.name }}
-                    </Link>
+                        <Link
+                            v-for="item in links"
+                            :key="item.name"
+                            :href="item.href"
+                            :class="[
+                                $page.url.startsWith(item.href)
+                                    ? 'bg-light-blue-600 text-white'
+                                    : 'text-white hover:bg-light-blue-600 hover:bg-opacity-60',
+                                'block px-3 py-2 rounded-md text-base font-medium',
+                            ]"
+                            :aria-current="
+                                $page.url.startsWith(item.href)
+                                    ? 'page'
+                                    : undefined
+                            "
+                        >
+                            {{ item.name }}
+                        </Link>
+                    </div>
                 </div>
             </DisclosurePanel>
             <!-- /Mobile Menu -->
