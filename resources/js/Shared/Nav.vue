@@ -1,6 +1,6 @@
 <template>
     <div class="min-h-full">
-        <Disclosure as="nav" class="bg-sky-600" v-slot="{ open }">
+        <Disclosure as="nav" class="bg-blue-600" v-slot="{ open }">
             <div class="container mx-auto px-6 lg:px-8">
                 <div class="relative flex items-center justify-between h-16">
                     <!-- Mobile Menu Hamburger -->
@@ -21,9 +21,9 @@
                                 justify-center
                                 p-2
                                 rounded-md
-                                text-sky-200
+                                text-blue-200
                                 hover:text-white
-                                hover:bg-sky-500
+                                hover:bg-light-blue-500
                                 hover:bg-opacity-75
                                 focus:outline-none
                                 focus:ring-2
@@ -70,17 +70,19 @@
                                     >Itens do menu de navegação:</span
                                 >
                                 <div
-                                    v-for="item in navigation"
+                                    v-for="item in navigation.keyLinks"
                                     :key="item.name"
                                 >
-                                    <div class="flex items-center text-white">
+                                    <div
+                                        class="flex items-center text-blue-100"
+                                    >
                                         <Link
                                             :href="item.href"
                                             :class="[
                                                 $page.url.startsWith(item.href)
-                                                    ? 'bg-sky-700'
-                                                    : 'hover:bg-sky-500 hover:bg-opacity-75',
-                                                'text-sm font-medium px-3 py-2 rounded-md',
+                                                    ? 'bg-light-blue-600'
+                                                    : 'hover:bg-light-blue-600 hover:bg-opacity-75',
+                                                'text-sm font-medium leading-5 px-3 py-2 rounded-md',
                                             ]"
                                             :aria-current="
                                                 $page.url.startsWith(item.href)
@@ -102,7 +104,7 @@
                                                 flex
                                                 items-center
                                                 text-white
-                                                hover:bg-sky-500
+                                                hover:bg-light-blue-600
                                                 hover:bg-opacity-75
                                             "
                                         >
@@ -118,7 +120,7 @@
                                                     h-5
                                                     w-5
                                                     fill-current
-                                                    text-sky-200
+                                                    text-blue-200
                                                 "
                                                 aria-hidden="true"
                                             />
@@ -138,45 +140,39 @@
                                                 absolute
                                                 right-0
                                                 mt-2
-                                                w-52
+                                                w-56
                                                 rounded-md
                                                 shadow-lg
                                                 py-1
                                                 bg-white
                                                 ring-1 ring-black ring-opacity-5
                                                 focus:outline-none
+                                                divide-y divide-gray-100
                                             "
                                         >
-                                            <MenuItem
-                                                v-for="item in dropDownNavigation"
-                                                :key="item.name"
-                                                v-slot="{ active }"
+                                            <div
+                                                v-for="(
+                                                    links, index
+                                                ) in navigation.moreLinks"
+                                                :key="index"
                                             >
-                                                <div
-                                                    v-if="
-                                                        item.name ===
-                                                        'separator'
-                                                    "
+                                                <MenuItem
+                                                    v-for="item in links"
+                                                    :key="item.name"
+                                                    v-slot="{ active }"
                                                 >
-                                                    <hr
-                                                        class="
-                                                            border-t
-                                                            border-gray-200
-                                                        "
-                                                    />
-                                                </div>
-                                                <Link
-                                                    v-else
-                                                    :href="item.href"
-                                                    :class="[
-                                                        active
-                                                            ? 'bg-gray-100'
-                                                            : '',
-                                                        'block px-4 py-2 text-sm text-gray-700',
-                                                    ]"
-                                                    >{{ item.name }}</Link
-                                                >
-                                            </MenuItem>
+                                                    <Link
+                                                        :href="item.href"
+                                                        :class="[
+                                                            active
+                                                                ? 'bg-gray-100'
+                                                                : '',
+                                                            'block px-4 py-2 text-sm text-gray-700',
+                                                        ]"
+                                                        >{{ item.name }}</Link
+                                                    >
+                                                </MenuItem>
+                                            </div>
                                         </MenuItems>
                                     </transition>
                                 </Menu>
@@ -201,14 +197,14 @@
                         <button
                             type="button"
                             class="
-                                bg-sky-600
+                                bg-blue-600
                                 rounded-full
-                                text-sky-200
+                                text-blue-200
                                 hover:text-white
                                 focus:outline-none
                                 focus:ring-2
                                 focus:ring-offset-2
-                                focus:ring-offset-sky-600
+                                focus:ring-offset-blue-600
                                 focus:ring-white
                                 lg:p-1
                                 lg:focus:ring-0
@@ -226,7 +222,8 @@
                             <div>
                                 <MenuButton
                                     class="
-                                        bg-sky-600
+                                        bg-blue-600
+                                        hover:bg-light-blue-600
                                         flex
                                         items-center
                                         text-sm text-white
@@ -234,8 +231,9 @@
                                         focus:outline-none
                                         focus:ring-2
                                         focus:ring-offset-2
-                                        focus:ring-offset-sky-600
+                                        focus:ring-offset-blue-600
                                         focus:ring-white
+                                        w-[13.5rem]
                                         lg:p-1
                                         lg:focus:ring-0
                                         lg:focus:ring-offset-0
@@ -246,12 +244,19 @@
                                         Abrir menu do usuário
                                     </span>
                                     <img
-                                        class="h-8 w-8 rounded-full"
+                                        class="h-8 w-8 mr-2 rounded-full"
                                         :src="user.imageUrl"
                                         alt=""
                                     />
-                                    <span class="hidden xl:block ml-2"
-                                        >Empresa de Exemplo</span
+                                    <span
+                                        class="
+                                            hidden
+                                            xl:block
+                                            truncate
+                                            ...
+                                            w-[8.75rem]
+                                        "
+                                        >{{ client.name }}</span
                                     >
                                     <ChevronDownIcon
                                         class="
@@ -260,7 +265,7 @@
                                             h-5
                                             w-5
                                             fill-current
-                                            text-sky-200
+                                            text-blue-200
                                             lg:block
                                         "
                                         aria-hidden="true"
@@ -281,7 +286,7 @@
                                         absolute
                                         right-0
                                         mt-2
-                                        w-48
+                                        w-56
                                         rounded-md
                                         shadow-lg
                                         py-1
@@ -291,9 +296,58 @@
                                         divide-y divide-gray-100
                                     "
                                 >
-                                    <div>
+                                    <MenuItem
+                                        as="div"
+                                        class="
+                                            flex flex-col
+                                            w-full
+                                            h-16
+                                            justify-center
+                                            text-left
+                                            px-4
+                                            py-2
+                                            text-sm text-gray-900
+                                        "
+                                        disabled
+                                    >
+                                        <span> Conectado como </span>
+                                        <span
+                                            class="font-medium truncate ..."
+                                            >{{ user.name }}</span
+                                        >
+                                    </MenuItem>
+                                    <MenuItem
+                                        as="div"
+                                        class="
+                                            flex flex-col
+                                            w-full
+                                            h-10
+                                            text-left
+                                            justify-center
+                                            px-4
+                                            py-2
+                                            text-sm text-gray-900
+                                        "
+                                        disabled
+                                    >
+                                        <span
+                                            class="
+                                                font-medium
+                                                text-gray-500 text-xs
+                                                uppercase
+                                                truncate
+                                                ...
+                                            "
+                                        >
+                                            {{ client.name }}
+                                        </span>
+                                    </MenuItem>
+                                    <div
+                                        v-for="(links, index) in userNavigation"
+                                        :key="index"
+                                    >
                                         <MenuItem
-                                            v-for="item in userNavigation"
+                                            v-for="item in links"
                                             :key="item.name"
                                             v-slot="{ active }"
                                         >
@@ -306,7 +360,9 @@
                                                     }"
                                                     as="button"
                                                     :class="[
-                                                        active ? 'bg-gray-100' : '',
+                                                        active
+                                                            ? 'bg-gray-100'
+                                                            : '',
                                                         'block w-full text-left px-4 py-2 text-sm text-gray-700',
                                                     ]"
                                                 >
@@ -342,8 +398,8 @@
                         :href="item.href"
                         :class="[
                             $page.url.startsWith(item.href)
-                                ? 'bg-sky-700 text-white'
-                                : 'text-white hover:bg-sky-500 hover:bg-opacity-75',
+                                ? 'bg-light-blue-700 text-white'
+                                : 'text-white hover:bg-light-blue-500 hover:bg-opacity-75',
                             'block px-3 py-2 rounded-md text-base font-medium',
                         ]"
                         :aria-current="
@@ -392,82 +448,111 @@ export default {
     },
 
     data() {
-        const navigation = [
-            {
-                name: "Dashboard",
-                href: "/dashboard",
-            },
-            {
-                name: "Grupos",
-                href: "/localgroups",
-            },
-            {
-                name: "Controle de Acesso",
-                href: "/access_control",
-            },
-            {
-                name: "Firewall",
-                href: "/firewall",
-            },
-            {
-                name: "VPN Empresarial",
-                href: "/vpns",
-            },
-            {
-                name: "Relatórios",
-                href: "/reports",
-            },
-        ];
-
-        const dropDownNavigation = [
-            {
-                name: "Velocidade",
-                href: "/traffic_control",
-            },
-            {
-                name: "separator",
-                href: "#",
-            },
-            {
-                name: "Redes",
-                href: "/networks",
-            },
-            {
-                name: "Equipamentos",
-                href: "/clientips",
-            },
-            {
-                name: "Usuários",
-                href: "/users",
-            },
-            {
-                name: "separator",
-                href: "#",
-            },
-            {
-                name: "Registros DNS locais",
-                href: "/networks/custom_dns_record",
-            },
-            {
-                name: "Compatibilidade AD",
-                href: "/networks/conditional_forwarding_dns",
-            },
-            {
-                name: "Endereços MAC liberados",
-                href: "/clientips/ignored_macs",
-            },
-        ];
+        const navigation = {
+            keyLinks: [
+                {
+                    name: "Dashboard",
+                    href: "/dashboard",
+                },
+                {
+                    name: "Grupos",
+                    href: "/localgroups",
+                },
+                {
+                    name: "Controle de Acesso",
+                    href: "/access_control",
+                },
+                {
+                    name: "Firewall",
+                    href: "/firewall",
+                },
+                {
+                    name: "VPN Empresarial",
+                    href: "/vpns",
+                },
+                {
+                    name: "Relatórios",
+                    href: "/reports",
+                },
+            ],
+            moreLinks: [
+                [
+                    {
+                        name: "Velocidade",
+                        href: "/traffic_control",
+                    },
+                ],
+                [
+                    {
+                        name: "Redes",
+                        href: "/networks",
+                    },
+                    {
+                        name: "Equipamentos",
+                        href: "/clientips",
+                    },
+                    {
+                        name: "Usuários",
+                        href: "/users",
+                    },
+                ],
+                [
+                    {
+                        name: "Registros DNS locais",
+                        href: "/networks/custom_dns_record",
+                    },
+                    {
+                        name: "Compatibilidade AD",
+                        href: "/networks/conditional_forwarding_dns",
+                    },
+                    {
+                        name: "Endereços MAC liberados",
+                        href: "/clientips/ignored_macs",
+                    },
+                ],
+            ],
+        };
 
         const userNavigation = [
-            {
-                name: "Settings",
-                href: "/users/settings",
-            },
-            {
-                name: "Sign out",
-                href: "/logout",
-                method: "post",
-            },
+            [
+                {
+                    name: "Dados de cliente",
+                    href: "/users/settings",
+                },
+                {
+                    name: "Preferências",
+                    href: "/users/settings",
+                },
+                {
+                    name: "Log de atividades",
+                    href: "/users/settings",
+                },
+            ],
+            [
+                {
+                    name: "Meus dados",
+                    href: "/users/settings",
+                },
+                {
+                    name: "Alterar senha",
+                    href: "/users/settings",
+                },
+                {
+                    name: "Excluir conta",
+                    href: "/users/settings",
+                },
+            ],
+            [
+                {
+                    name: "Onboarding",
+                    href: "/users/settings",
+                },
+                {
+                    name: "Sair",
+                    href: "/logout",
+                    method: "post",
+                },
+            ],
         ];
 
         return {
@@ -476,23 +561,18 @@ export default {
                 email: "werner@lumiun.com",
                 imageUrl: "",
             },
+            client: {
+                name: "Amme - Organização Social Associação Mantenedora De Mães Especiais",
+                imageUrl: "",
+            },
             navigation,
             userNavigation,
-            dropDownNavigation,
         };
     },
 
     created() {
         this.generateUserAvatar();
     },
-
-    // setup() {
-    //     return {
-    //         navigation,
-    //         userNavigation,
-    //         dropDownNavigation,
-    //     };
-    // },
 
     methods: {
         generateUserAvatar() {
@@ -509,7 +589,7 @@ export default {
                 "&size=256&background=random&rounded=true&color=random";
         },
 
-        mobileNavigation() {
+        navigationSeparators(navigation) {
             let mobileNav = [];
 
             mobileNav.concat(this.navigation, this.dropDownNavigation);
