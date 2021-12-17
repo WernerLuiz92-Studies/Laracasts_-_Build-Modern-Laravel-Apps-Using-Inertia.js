@@ -3,6 +3,45 @@
         <Disclosure as="nav" class="bg-sky-600" v-slot="{ open }">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-16">
+                    <div
+                        class="
+                            absolute
+                            inset-y-0
+                            left-0
+                            flex
+                            items-center
+                            sm:hidden
+                        "
+                    >
+                        <!-- Mobile menu button -->
+                        <DisclosureButton
+                            class="
+                                inline-flex
+                                items-center
+                                justify-center
+                                p-2
+                                rounded-md
+                                text-gray-400
+                                hover:text-gray-500 hover:bg-gray-100
+                                focus:outline-none
+                                focus:ring-2
+                                focus:ring-inset
+                                focus:ring-indigo-500
+                            "
+                        >
+                            <span class="sr-only">Open main menu</span>
+                            <MenuIcon
+                                v-if="!open"
+                                class="block h-6 w-6"
+                                aria-hidden="true"
+                            />
+                            <XIcon
+                                v-else
+                                class="block h-6 w-6"
+                                aria-hidden="true"
+                            />
+                        </DisclosureButton>
+                    </div>
                     <div class="flex items-center">
                         <div class="flex-shrink-0">
                             <Link href="/">
@@ -246,45 +285,12 @@
                             <!-- /Profile dropdown -->
                         </div>
                     </div>
-                    <div class="-mr-2 flex lg:hidden">
-                        <!-- Mobile menu button -->
-                        <DisclosureButton
-                            class="
-                                bg-sky-600
-                                inline-flex
-                                items-center
-                                justify-center
-                                p-2
-                                rounded-md
-                                text-sky-200
-                                hover:text-white
-                                hover:bg-sky-500
-                                hover:bg-opacity-75
-                                focus:outline-none
-                                focus:ring-2
-                                focus:ring-offset-2
-                                focus:ring-offset-sky-600
-                                focus:ring-white
-                            "
-                        >
-                            <span class="sr-only">Open main menu</span>
-                            <MenuIcon
-                                v-if="!open"
-                                class="block h-6 w-6"
-                                aria-hidden="true"
-                            />
-                            <XIcon
-                                v-else
-                                class="block h-6 w-6"
-                                aria-hidden="true"
-                            />
-                        </DisclosureButton>
-                        <!-- /Mobile menu button -->
-                    </div>
                 </div>
             </div>
-            <DisclosurePanel class="lg:hidden">
-                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+
+            <!-- Menu Mobile -->
+            <DisclosurePanel class="sm:hidden">
+                <div class="pt-2 pb-4 space-y-1">
                     <Link
                         v-for="item in mobileNavigation"
                         :key="item.name"
@@ -302,7 +308,10 @@
                         {{ item.name }}
                     </Link>
                 </div>
-                <div class="pt-4 pb-3 border-t border-sky-700">
+            </DisclosurePanel>
+            <!-- /Menu Mobile -->
+
+            <!-- <div class="pt-4 pb-3 border-t border-sky-700">
                     <div class="flex items-center px-5">
                         <div class="flex-shrink-0">
                             <img
@@ -381,8 +390,7 @@
                             {{ item.name }}
                         </Link>
                     </div>
-                </div>
-            </DisclosurePanel>
+                </div> -->
         </Disclosure>
     </div>
 </template>
