@@ -79,13 +79,15 @@
                                         <Link
                                             :href="item.href"
                                             :class="[
-                                                $page.url.startsWith(item.href)
+                                                $page.component ===
+                                                item.component
                                                     ? 'bg-light-blue-600'
                                                     : 'hover:bg-light-blue-600 hover:bg-opacity-60',
                                                 'text-sm font-medium leading-5 px-3 py-2 rounded-md',
                                             ]"
                                             :aria-current="
-                                                $page.url.startsWith(item.href)
+                                                $page.component ===
+                                                item.component
                                                     ? 'page'
                                                     : undefined
                                             "
@@ -406,13 +408,13 @@
                             :key="item.name"
                             :href="item.href"
                             :class="[
-                                $page.url.startsWith(item.href)
+                                $page.component === item.component
                                     ? 'bg-light-blue-600 text-white'
                                     : 'text-white hover:bg-light-blue-600 hover:bg-opacity-60',
                                 'block px-3 py-2 rounded-md text-base font-medium',
                             ]"
                             :aria-current="
-                                $page.url.startsWith(item.href)
+                                $page.component === item.component
                                     ? 'page'
                                     : undefined
                             "
@@ -430,13 +432,13 @@
                             :key="item.name"
                             :href="item.href"
                             :class="[
-                                $page.url.startsWith(item.href)
+                                $page.component === item.component
                                     ? 'bg-light-blue-600 text-white'
                                     : 'text-white hover:bg-light-blue-600 hover:bg-opacity-60',
                                 'block px-3 py-2 rounded-md text-base font-medium',
                             ]"
                             :aria-current="
-                                $page.url.startsWith(item.href)
+                                $page.component === item.component
                                     ? 'page'
                                     : undefined
                             "
@@ -489,26 +491,32 @@ export default {
                 {
                     name: "Dashboard",
                     href: "/dashboard",
+                    component: "Dashboard",
                 },
                 {
                     name: "Grupos",
                     href: "/localgroups",
+                    component: "LocalGroups",
                 },
                 {
                     name: "Controle de Acesso",
                     href: "/access_control",
+                    component: "AccessControl",
                 },
                 {
                     name: "Firewall",
                     href: "/firewall",
+                    component: "Firewall",
                 },
                 {
                     name: "VPN Empresarial",
                     href: "/vpns",
+                    component: "Vpns",
                 },
                 {
                     name: "Relatórios",
                     href: "/reports",
+                    component: "Reports",
                 },
             ],
             moreLinks: [
@@ -516,34 +524,41 @@ export default {
                     {
                         name: "Velocidade",
                         href: "/traffic_control",
+                        component: "TrafficControl",
                     },
                 ],
                 [
                     {
                         name: "Redes",
                         href: "/networks",
+                        component: "Networks",
                     },
                     {
                         name: "Equipamentos",
                         href: "/clientips",
+                        component: "ClientIps",
                     },
                     {
                         name: "Usuários",
                         href: "/users",
+                        component: "Users",
                     },
                 ],
                 [
                     {
                         name: "Registros DNS locais",
                         href: "/networks/custom_dns_record",
+                        component: "CustomDnsRecord",
                     },
                     {
                         name: "Compatibilidade AD",
                         href: "/networks/conditional_forwarding_dns",
+                        component: "ConditionalForwardingDns",
                     },
                     {
                         name: "Endereços MAC liberados",
                         href: "/clientips/ignored_macs",
+                        component: "IgnoredMacs",
                     },
                 ],
             ],
@@ -554,34 +569,41 @@ export default {
                 {
                     name: "Dados de cliente",
                     href: "/users/settings",
+                    component: "Settings",
                 },
                 {
                     name: "Preferências",
                     href: "/users/settings",
+                    component: "Settings",
                 },
                 {
                     name: "Log de atividades",
                     href: "/users/settings",
+                    component: "Settings",
                 },
             ],
             [
                 {
                     name: "Meus dados",
                     href: "/users/settings",
+                    component: "Settings",
                 },
                 {
                     name: "Alterar senha",
                     href: "/users/settings",
+                    component: "Settings",
                 },
                 {
                     name: "Excluir conta",
                     href: "/users/settings",
+                    component: "Settings",
                 },
             ],
             [
                 {
                     name: "Onboarding",
                     href: "/users/settings",
+                    component: "Settings",
                 },
                 {
                     name: "Sair",
