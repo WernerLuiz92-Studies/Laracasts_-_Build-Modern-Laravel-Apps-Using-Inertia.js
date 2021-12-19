@@ -49,7 +49,7 @@
                             "
                             href="/users"
                             as="button"
-                            preserve-scroll="true"
+                            preserve-scroll
                         >
                             <RefreshIcon class="h-5 w-5" aria-hidden="true" />
                         </Link>
