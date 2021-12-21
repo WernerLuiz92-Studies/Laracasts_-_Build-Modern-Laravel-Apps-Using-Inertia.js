@@ -1,7 +1,7 @@
 <template>
     <div class="min-h-full">
         <Disclosure as="nav" class="bg-blue-600" v-slot="{ open }">
-            <div class="container mx-auto px-6 lg:px-8">
+            <div class="max-w-full mx-auto px-6 lg:px-8">
                 <div class="relative flex items-center justify-between h-16">
                     <!-- Mobile Menu Hamburger -->
                     <div
