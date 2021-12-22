@@ -57,9 +57,9 @@
                     >
                         <!-- Logo -->
                         <div class="flex-shrink-0 flex items-center">
-                            <Link href="/">
+                            <inertia-link href="/">
                                 <Logo class="h-6" alt="Logo da Empresa" />
-                            </Link>
+                            </inertia-link>
                         </div>
                         <!-- /Logo -->
 
@@ -76,7 +76,7 @@
                                     <div
                                         class="flex items-center text-blue-100"
                                     >
-                                        <Link
+                                        <inertia-link
                                             :href="item.href"
                                             :class="[
                                                 $page.component ===
@@ -91,7 +91,7 @@
                                                     ? 'page'
                                                     : undefined
                                             "
-                                            >{{ item.name }}</Link
+                                            >{{ item.name }}</inertia-link
                                         >
                                     </div>
                                 </div>
@@ -163,7 +163,7 @@
                                                     :key="item.name"
                                                     v-slot="{ active }"
                                                 >
-                                                    <Link
+                                                    <inertia-link
                                                         :href="item.href"
                                                         :class="[
                                                             active
@@ -171,7 +171,9 @@
                                                                 : '',
                                                             'block px-4 py-2 text-sm text-gray-700',
                                                         ]"
-                                                        >{{ item.name }}</Link
+                                                        >{{
+                                                            item.name
+                                                        }}</inertia-link
                                                     >
                                                 </MenuItem>
                                             </div>
@@ -360,7 +362,7 @@
                                             v-slot="{ active }"
                                         >
                                             <div v-if="item.method">
-                                                <Link
+                                                <inertia-link
                                                     :href="item.href"
                                                     :method="item.method"
                                                     :data="{
@@ -375,9 +377,9 @@
                                                     ]"
                                                 >
                                                     {{ item.name }}
-                                                </Link>
+                                                </inertia-link>
                                             </div>
-                                            <Link
+                                            <inertia-link
                                                 v-else
                                                 :href="item.href"
                                                 :class="[
@@ -386,7 +388,7 @@
                                                 ]"
                                             >
                                                 {{ item.name }}
-                                            </Link>
+                                            </inertia-link>
                                         </MenuItem>
                                     </div>
                                 </MenuItems>
@@ -408,7 +410,7 @@
                     "
                 >
                     <div class="mx-2 py-1">
-                        <Link
+                        <inertia-link
                             v-for="item in navigation.keyLinks"
                             :key="item.name"
                             :href="item.href"
@@ -425,14 +427,14 @@
                             "
                         >
                             {{ item.name }}
-                        </Link>
+                        </inertia-link>
                     </div>
                     <div
                         class="mx-2 py-1"
                         v-for="(links, index) in navigation.moreLinks"
                         :key="index"
                     >
-                        <Link
+                        <inertia-link
                             v-for="item in links"
                             :key="item.name"
                             :href="item.href"
@@ -449,7 +451,7 @@
                             "
                         >
                             {{ item.name }}
-                        </Link>
+                        </inertia-link>
                     </div>
                 </div>
             </DisclosurePanel>
@@ -459,7 +461,6 @@
 </template>
 
 <script>
-import { Link } from "@inertiajs/inertia-vue3";
 import {
     Disclosure,
     DisclosureButton,
@@ -472,11 +473,9 @@ import {
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/vue/outline";
 import { ChevronDownIcon } from "@heroicons/vue/solid";
 import Logo from "./Logo";
-import axios from "axios";
 
 export default {
     components: {
-        Link,
         Disclosure,
         DisclosureButton,
         DisclosurePanel,

@@ -27,7 +27,7 @@
                             "
                         >
                             <p>The current time is {{ time }}.</p>
-                            <Link
+                            <inertia-link
                                 class="
                                     inline-flex
                                     items-center
@@ -52,7 +52,7 @@
                                     class="h-5 w-5"
                                     aria-hidden="true"
                                 />
-                            </Link>
+                            </inertia-link>
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,6 @@
 <script>
 import AppLayout from "../Layouts/AppLayout";
 import Banner from "../Shared/Banner";
-import { Link } from "@inertiajs/inertia-vue3";
 import { RefreshIcon } from "@heroicons/vue/outline";
 
 export default {
@@ -74,7 +73,6 @@ export default {
     components: {
         AppLayout,
         Banner,
-        Link,
         RefreshIcon,
     },
 

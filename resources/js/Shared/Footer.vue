@@ -26,8 +26,8 @@
                 >
                 <span class="block sm:inline text-xs text-gray-600"
                     >Fuso horário America/Sao_Paulo
-                    <Link class="text-blue-500 ml-2" href="#"
-                        >Alterar</Link
+                    <inertia-link class="text-blue-500 ml-2" href="#"
+                        >Alterar</inertia-link
                     ></span
                 >
             </div>
@@ -36,13 +36,8 @@
 </template>
 
 <script>
-import { Link } from "@inertiajs/inertia-vue3";
 export default {
     name: "Footer",
-
-    components: {
-        Link,
-    },
 
     data() {
         let now = new Date();
