@@ -1,4 +1,7 @@
 <template>
+    <inertia-head>
+        <title>{{ title }}</title>
+    </inertia-head>
     <main>
         <!-- Page Banner -->
         <Banner>{{ title }}</Banner>

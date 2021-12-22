@@ -1,4 +1,12 @@
 <template>
+    <inertia-head title="Inertia App">
+        <title>Inertia App</title>
+        <meta
+            type="description"
+            content="My Inertia App Description"
+            head-key="description"
+        />
+    </inertia-head>
     <div class="flex flex-col h-screen">
         <section>
             <header>

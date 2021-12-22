@@ -1,4 +1,7 @@
 <template>
+    <inertia-head>
+        <title>{{ title }}</title>
+    </inertia-head>
     <main>
         <!-- Page Banner -->
         <Banner>{{ title }}</Banner>
@@ -25,10 +28,16 @@
 import Banner from "../Shared/Banner";
 
 export default {
-    name: "Velocidade",
+    name: "TrafficControl",
 
     components: {
         Banner,
+    },
+
+    data() {
+        return {
+            title: "Controle de Velocidade",
+        };
     },
 };
 </script>

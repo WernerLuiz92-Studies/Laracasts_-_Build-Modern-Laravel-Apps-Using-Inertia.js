@@ -1,4 +1,7 @@
 <template>
+    <inertia-head>
+        <title>{{ title }}</title>
+    </inertia-head>
     <main>
         <!-- Page Banner -->
         <Banner>{{ title }}</Banner>
@@ -25,7 +28,7 @@
 import Banner from "../Shared/Banner";
 
 export default {
-    name: "ClientIps",
+    name: "Settings",
 
     components: {
         Banner,
@@ -33,7 +36,7 @@ export default {
 
     data() {
         return {
-            title: "Settings",
+            title: "Configurações",
         };
     },
 };

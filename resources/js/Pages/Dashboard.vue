@@ -1,4 +1,12 @@
 <template>
+    <inertia-head>
+        <title>{{ title }}</title>
+        <meta
+            type="description"
+            content="HomePage Description"
+            head-key="description"
+        />
+    </inertia-head>
     <main>
         <!-- Page Banner -->
         <Banner>{{ title }}</Banner>
@@ -19,7 +27,6 @@
         </div>
     </main>
 </template>
-
 
 <script>
 import Banner from "../Shared/Banner";
