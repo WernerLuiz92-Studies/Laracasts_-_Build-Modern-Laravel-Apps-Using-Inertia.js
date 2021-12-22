@@ -56,7 +56,6 @@ Route::prefix('/networks')->group(function () {
     Route::get('/conditional_forwarding_dns', function () {
         return Inertia::render('ConditionalForwardingDns');
     })->name('conditional_forwarding_dns');
-
 });
 
 Route::prefix('/clientips')->group(function () {
@@ -68,7 +67,6 @@ Route::prefix('/clientips')->group(function () {
     Route::get('/ignored_macs', function () {
         return Inertia::render('IgnoredMacs');
     })->name('ignored_macs');
-
 });
 
 Route::prefix('/users')->group(function () {
@@ -82,7 +80,16 @@ Route::prefix('/users')->group(function () {
     Route::get('/settings', function () {
         return Inertia::render('Settings');
     })->name('settings');
-    
+});
+
+Route::prefix('/auth')->group(function () {
+    Route::get('/login', function () {
+        return Inertia::render('Auth/Login');
+    })->name('login');
+
+    Route::get('/forgot_password', function () {
+        return Inertia::render('Auth/ForgotPassword');
+    })->name('forgot_password');
 });
 
 Route::post('/logout', function () {
