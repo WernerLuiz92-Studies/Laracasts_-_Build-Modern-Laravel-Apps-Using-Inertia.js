@@ -21,6 +21,5 @@
   </head>
   <body class="h-full">
     @inertia
-
   </body>
 </html>

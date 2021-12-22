@@ -1,16 +1,20 @@
 <template>
     <div class="flex flex-col h-screen">
-        <header>
-            <Nav />
-        </header>
+        <section>
+            <header>
+                <Nav />
+            </header>
+        </section>
 
-        <main class="mb-auto">
+        <section class="mb-auto">
             <slot />
-        </main>
+        </section>
 
-        <footer>
-            <Footer />
-        </footer>
+        <section>
+            <footer>
+                <Footer />
+            </footer>
+        </section>
     </div>
 </template>
 

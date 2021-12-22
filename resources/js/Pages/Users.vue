@@ -2,7 +2,7 @@
     <AppLayout>
         <header>
             <!-- Page Banner -->
-            <Banner> Usuários </Banner>
+            <Banner>{{ title }}</Banner>
             <!-- /End Page Banner -->
         </header>
 
@@ -83,6 +83,12 @@ export default {
             type: String,
             default: "",
         },
+    },
+
+    data() {
+        return {
+            title: "Usuários",
+        };
     },
 };
 </script>
