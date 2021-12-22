@@ -22,13 +22,10 @@
 
 
 <script>
-import AppLayout from "../Layouts/AppLayout";
 import Banner from "../Shared/Banner";
 
 export default {
     name: "Networks",
-
-    layout: AppLayout,
 
     components: {
         Banner,

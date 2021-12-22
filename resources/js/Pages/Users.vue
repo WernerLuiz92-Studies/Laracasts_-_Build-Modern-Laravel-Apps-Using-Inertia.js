@@ -58,14 +58,11 @@
 </template>
 
 <script>
-import AppLayout from "../Layouts/AppLayout";
 import Banner from "../Shared/Banner";
 import { RefreshIcon } from "@heroicons/vue/outline";
 
 export default {
     name: "Users",
-
-    layout: AppLayout,
 
     components: {
         Banner,

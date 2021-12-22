@@ -3,9 +3,16 @@ import { createInertiaApp, Link } from '@inertiajs/inertia-vue3';
 import { InertiaProgress } from '@inertiajs/progress';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import Layout from './Layouts/AppLayout';
 
 createInertiaApp({
-  resolve: name => require(`./Pages/${name}`),
+  resolve: name => {
+    let page = require(`./Pages/${name}`).default;
+
+    page.layout = Layout;
+
+    return page;
+  },
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })
       .use(plugin)

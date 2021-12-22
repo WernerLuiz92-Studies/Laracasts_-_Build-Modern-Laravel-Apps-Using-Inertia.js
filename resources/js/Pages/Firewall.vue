@@ -20,15 +20,11 @@
     </main>
 </template>
 
-
 <script>
-import AppLayout from "../Layouts/AppLayout";
 import Banner from "../Shared/Banner";
 
 export default {
     name: "Firewall",
-
-    layout: AppLayout,
 
     components: {
         Banner,
