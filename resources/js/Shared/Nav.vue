@@ -83,7 +83,7 @@
                                                 item.component
                                                     ? 'bg-light-blue-600'
                                                     : 'hover:bg-light-blue-600 hover:bg-opacity-60',
-                                                'text-sm font-medium leading-5 px-3 py-2 rounded-md',
+                                                'text-sm font-medium leading-5 px-3 py-2 rounded-md hover:text-white',
                                             ]"
                                             :aria-current="
                                                 $page.component ===
@@ -248,7 +248,8 @@
                                     </span>
                                     <img
                                         class="h-8 w-8 lg:mr-2 rounded-full"
-                                        :src="user.imageUrl"
+                                        :src="$page.props.auth.user.avatar"
+                                        @error="generateUserAvatar"
                                         alt=""
                                     />
                                     <span
@@ -259,7 +260,9 @@
                                             ...
                                             xl:w-[8.75rem]
                                         "
-                                        >{{ client.name }}</span
+                                        >{{
+                                            $page.props.auth.client.name
+                                        }}</span
                                     >
                                     <ChevronDownIcon
                                         class="
@@ -316,7 +319,9 @@
                                         <span> Conectado como </span>
                                         <span
                                             class="font-medium truncate ..."
-                                            >{{ user.name }}</span
+                                            >{{
+                                                $page.props.auth.user.name
+                                            }}</span
                                         >
                                     </MenuItem>
                                     <MenuItem
@@ -342,7 +347,7 @@
                                                 ...
                                             "
                                         >
-                                            {{ client.name }}
+                                            {{ $page.props.auth.client.name }}
                                         </span>
                                     </MenuItem>
                                     <div
@@ -467,6 +472,7 @@ import {
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/vue/outline";
 import { ChevronDownIcon } from "@heroicons/vue/solid";
 import Logo from "./Logo";
+import axios from "axios";
 
 export default {
     components: {
@@ -614,47 +620,24 @@ export default {
         ];
 
         return {
-            user: {
-                name: "Werner Luiz Gottschalt",
-                email: "werner@lumiun.com",
-                imageUrl: "",
-            },
-            client: {
-                name: "Amme - Organização Social Associação Mantenedora De Mães Especiais",
-                imageUrl: "",
-            },
             navigation,
             userNavigation,
         };
     },
 
-    created() {
-        this.generateUserAvatar();
-    },
-
     methods: {
-        generateUserAvatar() {
-            if (this.user.imageUrl !== "") {
-                return;
-            }
-            let names = this.user.name.split(" ");
+        generateUserAvatar(event) {
+            let names = this.$page.props.auth.user.name.split(" ");
+            let imageUrl = "";
 
-            this.user.imageUrl =
+            imageUrl =
                 "https://ui-avatars.com/api/?name=" +
                 names[0] +
                 "+" +
                 names[names.length - 1] +
                 "&size=256&background=random&rounded=true&color=random";
-        },
 
-        navigationSeparators(navigation) {
-            let mobileNav = [];
-
-            mobileNav.concat(this.navigation, this.dropDownNavigation);
-
-            console.log(mobileNav);
-
-            return mobileNav;
+            event.target.src = imageUrl;
         },
     },
 };
