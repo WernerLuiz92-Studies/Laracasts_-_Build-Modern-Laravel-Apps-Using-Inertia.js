@@ -6,8 +6,8 @@ import VueAxios from 'vue-axios';
 import Layout from './Layouts/AppLayout';
 
 createInertiaApp({
-  resolve: name => {
-    let page = require(`./Pages/${name}`).default;
+  resolve: async name => {
+    let page = (await import(`./Pages/${name}`)).default;
 
     page.layout ??= Layout;
 
