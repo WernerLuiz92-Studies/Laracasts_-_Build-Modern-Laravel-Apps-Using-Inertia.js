@@ -1,40 +1,40 @@
 <template>
-    <!-- Nav -->
-    <Nav />
-    <!-- /End Nav -->
+    <AppLayout>
+        <header>
+            <!-- Page Banner -->
+            <Banner> Settings </Banner>
+            <!-- /End Page Banner -->
+        </header>
 
-    <header>
-        <!-- Page Banner -->
-        <Banner>
-            Settings
-        </Banner>
-        <!-- /End Page Banner -->
-    </header>
-
-    <main>
-        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-            <!-- Replace with your content -->
-            <div class="px-4 py-4 sm:px-0">
-                <div class="border-4 border-dashed border-gray-200 rounded-lg h-96" />
+        <main>
+            <div class="container mx-auto py-6 sm:px-6 lg:px-8">
+                <!-- Replace with your content -->
+                <div class="px-4 py-4 sm:px-0">
+                    <div
+                        class="
+                            border-4 border-dashed border-gray-200
+                            rounded-lg
+                            h-96
+                        "
+                    />
+                </div>
+                <!-- /End replace -->
             </div>
-            <!-- /End replace -->
-        </div>
-    </main>
-
+        </main>
+    </AppLayout>
 </template>
 
+
 <script>
-    import Banner from '../Shared/Banner';
-    import Nav from '../Shared/Nav';
+import AppLayout from "../Layouts/AppLayout";
+import Banner from "../Shared/Banner";
 
-    export default {
+export default {
+    name: "ClientIps",
 
-        name: 'Settings',
-
-        components: {
-            Banner,
-            Nav,
-        },
-
-    }
+    components: {
+        AppLayout,
+        Banner,
+    },
+};
 </script>
