@@ -21,7 +21,7 @@ createInertiaApp({
       .use(VueAxios, axios)
       .mount(el);
   },
-  title: title => `${title} | Lumiun Tecnologia`,
+  title: title => title ? `${title} | Lumiun Tecnologia` : 'Lumiun Tecnologia',
 });
 
 InertiaProgress.init({

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -73,7 +74,9 @@ Route::prefix('/users')->group(function () {
 
     Route::get('/', function () {
         return Inertia::render('Users', [
-            'time' => now()->toTimeString(),
+            'users' => User::all()->map(fn ($user) => [
+                'name' => $user->name,
+            ])
         ]);
     })->name('users');
 

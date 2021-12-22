@@ -1,6 +1,5 @@
 <template>
-    <inertia-head title="Inertia App">
-        <title>Inertia App</title>
+    <inertia-head>
         <meta
             type="description"
             content="My Inertia App Description"
