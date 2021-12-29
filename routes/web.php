@@ -26,7 +26,7 @@ Route::get('/localgroups', function () {
 
 Route::get('/access_control', function () {
     return Inertia::render('AccessControl');
-})->name('access_control');
+})->name('access.control');
 
 Route::get('/firewall', function () {
     return Inertia::render('Firewall');

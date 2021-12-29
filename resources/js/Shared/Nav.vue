@@ -57,9 +57,9 @@
                     >
                         <!-- Logo -->
                         <div class="flex-shrink-0 flex items-center">
-                            <inertia-link href="/">
+                            <a href="/v1/">
                                 <Logo class="h-6" alt="Logo da Empresa" />
-                            </inertia-link>
+                            </a>
                         </div>
                         <!-- /Logo -->
 
@@ -76,18 +76,33 @@
                                     <div
                                         class="flex items-center text-blue-100"
                                     >
+                                        <a
+                                            v-if="item.legacy"
+                                            :href="item.route"
+                                            class="
+                                                text-sm
+                                                font-medium
+                                                leading-5
+                                                px-3
+                                                py-2
+                                                rounded-md
+                                                hover:text-white
+                                                hover:bg-light-blue-600
+                                                hover:bg-opacity-60
+                                            "
+                                            >{{ item.name }}</a
+                                        >
                                         <inertia-link
-                                            :href="item.href"
+                                            v-else
+                                            :href="route(item.route)"
                                             :class="[
-                                                $page.component ===
-                                                item.component
+                                                route().current(item.route)
                                                     ? 'bg-light-blue-600'
                                                     : 'hover:bg-light-blue-600 hover:bg-opacity-60',
                                                 'text-sm font-medium leading-5 px-3 py-2 rounded-md hover:text-white',
                                             ]"
                                             :aria-current="
-                                                $page.component ===
-                                                item.component
+                                                route().current(item.route)
                                                     ? 'page'
                                                     : undefined
                                             "
@@ -163,8 +178,22 @@
                                                     :key="item.name"
                                                     v-slot="{ active }"
                                                 >
+                                                    <a
+                                                        v-if="item.legacy"
+                                                        :href="item.route"
+                                                        :class="[
+                                                            active
+                                                                ? 'bg-gray-100'
+                                                                : '',
+                                                            'block px-4 py-2 text-sm text-gray-700',
+                                                        ]"
+                                                        >{{ item.name }}</a
+                                                    >
                                                     <inertia-link
-                                                        :href="item.href"
+                                                        v-else
+                                                        :href="
+                                                            route(item.route)
+                                                        "
                                                         :class="[
                                                             active
                                                                 ? 'bg-gray-100'
@@ -238,7 +267,7 @@
                                         focus:ring-offset-2
                                         focus:ring-offset-blue-600
                                         focus:ring-white
-                                        xl:w-[13.5rem]
+                                        xl:max-w-[13.5rem]
                                         lg:p-1
                                         lg:focus:ring-0
                                         lg:focus:ring-offset-0
@@ -260,7 +289,7 @@
                                             xl:block
                                             truncate
                                             ...
-                                            xl:w-[8.75rem]
+                                            xl:max-w-[8.75rem]
                                         "
                                         >{{
                                             $page.props.auth.client.name
@@ -365,9 +394,7 @@
                                                 <inertia-link
                                                     :href="item.href"
                                                     :method="item.method"
-                                                    :data="{
-                                                        userId: 1,
-                                                    }"
+                                                    :data="item.data"
                                                     as="button"
                                                     :class="[
                                                         active
@@ -379,16 +406,32 @@
                                                     {{ item.name }}
                                                 </inertia-link>
                                             </div>
-                                            <inertia-link
-                                                v-else
-                                                :href="item.href"
-                                                :class="[
-                                                    active ? 'bg-gray-100' : '',
-                                                    'block px-4 py-2 text-sm text-gray-700',
-                                                ]"
-                                            >
-                                                {{ item.name }}
-                                            </inertia-link>
+                                            <div v-else>
+                                                <a
+                                                    v-if="item.legacy"
+                                                    :href="item.href"
+                                                    :class="[
+                                                        active
+                                                            ? 'bg-gray-100'
+                                                            : '',
+                                                        'block px-4 py-2 text-sm text-gray-700',
+                                                    ]"
+                                                >
+                                                    {{ item.name }}
+                                                </a>
+                                                <inertia-link
+                                                    v-else
+                                                    :href="item.href"
+                                                    :class="[
+                                                        active
+                                                            ? 'bg-gray-100'
+                                                            : '',
+                                                        'block px-4 py-2 text-sm text-gray-700',
+                                                    ]"
+                                                >
+                                                    {{ item.name }}
+                                                </inertia-link>
+                                            </div>
                                         </MenuItem>
                                     </div>
                                 </MenuItems>
@@ -410,48 +453,77 @@
                     "
                 >
                     <div class="mx-2 py-1">
-                        <inertia-link
+                        <template
                             v-for="item in navigation.keyLinks"
                             :key="item.name"
-                            :href="item.href"
-                            :class="[
-                                $page.component === item.component
-                                    ? 'bg-light-blue-600 text-white'
-                                    : 'text-white hover:bg-light-blue-600 hover:bg-opacity-60',
-                                'block px-3 py-2 rounded-md text-base font-medium',
-                            ]"
-                            :aria-current="
-                                $page.component === item.component
-                                    ? 'page'
-                                    : undefined
-                            "
                         >
-                            {{ item.name }}
-                        </inertia-link>
+                            <a
+                                v-if="item.legacy"
+                                :href="item.href"
+                                class="
+                                    block
+                                    px-3
+                                    py-2
+                                    rounded-md
+                                    text-base
+                                    font-medium
+                                    text-white
+                                    hover:bg-light-blue-600 hover:bg-opacity-60
+                                "
+                            >
+                                {{ item.name }}
+                            </a>
+                            <inertia-link
+                                v-else
+                                :href="item.href"
+                                :class="[
+                                    item.active
+                                        ? 'bg-light-blue-600 text-white'
+                                        : 'text-white hover:bg-light-blue-600 hover:bg-opacity-60',
+                                    'block px-3 py-2 rounded-md text-base font-medium',
+                                ]"
+                                :aria-current="item.active ? 'page' : undefined"
+                            >
+                                {{ item.name }}
+                            </inertia-link>
+                        </template>
                     </div>
                     <div
                         class="mx-2 py-1"
                         v-for="(links, index) in navigation.moreLinks"
                         :key="index"
                     >
-                        <inertia-link
-                            v-for="item in links"
-                            :key="item.name"
-                            :href="item.href"
-                            :class="[
-                                $page.component === item.component
-                                    ? 'bg-light-blue-600 text-white'
-                                    : 'text-white hover:bg-light-blue-600 hover:bg-opacity-60',
-                                'block px-3 py-2 rounded-md text-base font-medium',
-                            ]"
-                            :aria-current="
-                                $page.component === item.component
-                                    ? 'page'
-                                    : undefined
-                            "
-                        >
-                            {{ item.name }}
-                        </inertia-link>
+                        <template v-for="item in links" :key="item.name">
+                            <a
+                                v-if="item.legacy"
+                                :href="item.href"
+                                class="
+                                    block
+                                    px-3
+                                    py-2
+                                    rounded-md
+                                    text-base
+                                    font-medium
+                                    text-white
+                                    hover:bg-light-blue-600 hover:bg-opacity-60
+                                "
+                            >
+                                {{ item.name }}
+                            </a>
+                            <inertia-link
+                                v-else
+                                :href="item.href"
+                                :class="[
+                                    item.active
+                                        ? 'bg-light-blue-600 text-white'
+                                        : 'text-white hover:bg-light-blue-600 hover:bg-opacity-60',
+                                    'block px-3 py-2 rounded-md text-base font-medium',
+                                ]"
+                                :aria-current="item.active ? 'page' : undefined"
+                            >
+                                {{ item.name }}
+                            </inertia-link>
+                        </template>
                     </div>
                 </div>
             </DisclosurePanel>
@@ -495,75 +567,74 @@ export default {
             keyLinks: [
                 {
                     name: "Dashboard",
-                    href: "/dashboard",
-                    component: "Dashboard",
+                    route: "dashboard",
                 },
                 {
                     name: "Grupos",
-                    href: "/localgroups",
-                    component: "LocalGroups",
+                    href: route("localgroups"),
+                    active: route().current("localgroups"),
                 },
                 {
                     name: "Controle de Acesso",
-                    href: "/access_control",
-                    component: "AccessControl",
+                    href: route("access.control"),
+                    active: route().current("access.control"),
                 },
                 {
                     name: "Firewall",
-                    href: "/firewall",
-                    component: "Firewall",
+                    href: route("firewall"),
+                    active: route().current("firewall"),
                 },
                 {
                     name: "VPN Empresarial",
-                    href: "/vpns",
-                    component: "Vpns",
+                    href: route("vpns"),
+                    active: route().current("vpns"),
                 },
                 {
                     name: "Relatórios",
-                    href: "/reports",
-                    component: "Reports",
+                    href: route("reports"),
+                    active: route().current("reports"),
                 },
             ],
             moreLinks: [
                 [
                     {
                         name: "Velocidade",
-                        href: "/traffic_control",
-                        component: "TrafficControl",
+                        href: route("traffic_control"),
+                        active: route().current("traffic_control"),
                     },
                 ],
                 [
                     {
                         name: "Redes",
-                        href: "/networks",
-                        component: "Networks",
+                        href: route("networks"),
+                        active: route().current("networks"),
                     },
                     {
                         name: "Equipamentos",
-                        href: "/clientips",
-                        component: "ClientIps",
+                        href: route("clientips"),
+                        active: route().current("clientips"),
                     },
                     {
                         name: "Usuários",
-                        href: "/users",
-                        component: "Users",
+                        href: route("users"),
+                        active: route().current("users"),
                     },
                 ],
                 [
                     {
                         name: "Registros DNS locais",
-                        href: "/networks/custom_dns_record",
-                        component: "CustomDnsRecord",
+                        href: route(""),
+                        active: route().current(""),
                     },
                     {
                         name: "Compatibilidade AD",
-                        href: "/networks/conditional_forwarding_dns",
-                        component: "ConditionalForwardingDns",
+                        href: route("conditional_forwarding_dns"),
+                        active: route().current("conditional_forwarding_dns"),
                     },
                     {
                         name: "Endereços MAC liberados",
-                        href: "/clientips/ignored_macs",
-                        component: "IgnoredMacs",
+                        href: route("ignored_macs"),
+                        active: route().current("ignored_macs"),
                     },
                 ],
             ],
@@ -573,47 +644,50 @@ export default {
             [
                 {
                     name: "Dados de cliente",
-                    href: "/users/settings",
-                    component: "Settings",
+                    href: route("settings"),
+                    active: route().current("settings"),
                 },
                 {
                     name: "Preferências",
-                    href: "/users/settings",
-                    component: "Settings",
+                    href: route("settings"),
+                    active: route().current("settings"),
                 },
                 {
                     name: "Log de atividades",
-                    href: "/users/settings",
-                    component: "Settings",
+                    href: route("settings"),
+                    active: route().current("settings"),
                 },
             ],
             [
                 {
                     name: "Meus dados",
-                    href: "/users/settings",
-                    component: "Settings",
+                    href: route("settings"),
+                    active: route().current("settings"),
                 },
                 {
                     name: "Alterar senha",
-                    href: "/users/settings",
-                    component: "Settings",
+                    href: route("settings"),
+                    active: route().current("settings"),
                 },
                 {
                     name: "Excluir conta",
-                    href: "/users/settings",
-                    component: "Settings",
+                    href: route("settings"),
+                    active: route().current("settings"),
                 },
             ],
             [
                 {
                     name: "Onboarding",
-                    href: "/users/settings",
-                    component: "Settings",
+                    href: route("settings"),
+                    active: route().current("settings"),
                 },
                 {
                     name: "Sair",
-                    href: "/logout",
+                    href: route("logout"),
                     method: "post",
+                    data: {
+                        _token: this.$page.props.csrf_token,
+                    },
                 },
             ],
         ];
