@@ -19,6 +19,7 @@ createInertiaApp({
             .component("InertiaLink", Link)
             .component("InertiaHead", Head)
             .use(VueAxios, axios)
+            .mixin({ methods: { route: window.route } })
             .mount(el);
     },
     title: (title) =>

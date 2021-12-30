@@ -307,7 +307,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     ))])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <ul class=\"flex flex-wrap justify-around px-8\">\n                        <li\n                            class=\"\n                                bg-green-600\n                                m-2\n                                p-4\n                                rounded-xl\n                                text-center text-white\n                            \"\n                            v-for=\"user in users\"\n                            :key=\"user.id\"\n                            v-text=\"user.name\"\n                        />\n                    </ul> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /End replace ")])])], 64
+  ))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" /End replace ")])])], 64
   /* STABLE_FRAGMENT */
   );
 }
