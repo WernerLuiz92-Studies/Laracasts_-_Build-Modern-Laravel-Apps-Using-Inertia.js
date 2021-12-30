@@ -44,7 +44,7 @@ Route::get('/traffic_control', function () {
     return Inertia::render('TrafficControl');
 })->name('traffic_control');
 
-Route::prefix('/networks')->group(function () {
+Route::prefix('networks')->group(function () {
 
     Route::get('/', function () {
         return Inertia::render('Networks');
@@ -59,7 +59,7 @@ Route::prefix('/networks')->group(function () {
     })->name('conditional_forwarding_dns');
 });
 
-Route::prefix('/clientips')->group(function () {
+Route::prefix('clientips')->group(function () {
 
     Route::get('/', function () {
         return Inertia::render('ClientIps');
@@ -70,7 +70,7 @@ Route::prefix('/clientips')->group(function () {
     })->name('ignored_macs');
 });
 
-Route::prefix('/users')->group(function () {
+Route::prefix('users')->group(function () {
 
     Route::get('/', function () {
         return Inertia::render('Users', [
@@ -85,7 +85,7 @@ Route::prefix('/users')->group(function () {
     })->name('settings');
 });
 
-Route::prefix('/auth')->group(function () {
+Route::prefix('auth')->group(function () {
     Route::get('/login', function () {
         return Inertia::render('Auth/Login');
     })->name('login');
@@ -101,4 +101,4 @@ Route::post('/logout', function () {
 
 Route::fallback(function () {
     return redirect()->route('dashboard');
-});
+})->name('fallback');
