@@ -57,9 +57,12 @@
                     >
                         <!-- Logo -->
                         <div class="flex-shrink-0 flex items-center">
-                            <a href="/v1/">
+                            <inertia-link
+                                :href="route('dashboard')"
+                                @click="toggleNavigation('dashboard', 'key')"
+                            >
                                 <Logo class="h-6" alt="Logo da Empresa" />
-                            </a>
+                            </inertia-link>
                         </div>
                         <!-- /Logo -->
 
@@ -70,15 +73,15 @@
                                     >Itens do menu de navegação:</span
                                 >
                                 <div
-                                    v-for="item in navigation.keyLinks"
-                                    :key="item.name"
+                                    v-for="(link, index) in keyLinks"
+                                    :key="index"
                                 >
                                     <div
                                         class="flex items-center text-blue-100"
                                     >
                                         <a
-                                            v-if="item.legacy"
-                                            :href="item.route"
+                                            v-if="link.legacy"
+                                            :href="link.route"
                                             class="
                                                 text-sm
                                                 font-medium
@@ -90,28 +93,34 @@
                                                 hover:bg-light-blue-600
                                                 hover:bg-opacity-60
                                             "
-                                            >{{ item.name }}</a
+                                            >{{ link.name }}</a
                                         >
                                         <inertia-link
                                             v-else
-                                            :href="route(item.route)"
+                                            @click="
+                                                toggleNavigation(
+                                                    link.route,
+                                                    'key'
+                                                )
+                                            "
+                                            :href="route(link.route)"
                                             :class="[
-                                                route().current(item.route)
+                                                link.isActive
                                                     ? 'bg-light-blue-600'
                                                     : 'hover:bg-light-blue-600 hover:bg-opacity-60',
                                                 'text-sm font-medium leading-5 px-3 py-2 rounded-md hover:text-white',
                                             ]"
                                             :aria-current="
-                                                route().current(item.route)
+                                                link.isActive
                                                     ? 'page'
                                                     : undefined
                                             "
-                                            >{{ item.name }}</inertia-link
+                                            >{{ link.name }}</inertia-link
                                         >
                                     </div>
                                 </div>
                                 <!-- Nav More Links -->
-                                <Menu as="div" class="relative">
+                                <Menu as="div" class="relative z-50">
                                     <div>
                                         <MenuButton
                                             class="
@@ -164,35 +173,46 @@
                                                 bg-white
                                                 ring-1 ring-black ring-opacity-5
                                                 focus:outline-none
-                                                divide-y divide-gray-100
                                             "
                                         >
                                             <div
                                                 v-for="(
-                                                    links, index
-                                                ) in navigation.moreLinks"
+                                                    link, index
+                                                ) in moreLinks"
                                                 :key="index"
                                             >
                                                 <MenuItem
-                                                    v-for="item in links"
-                                                    :key="item.name"
                                                     v-slot="{ active }"
+                                                    :class="[
+                                                        link.isActive
+                                                            ? 'bg-gray-200'
+                                                            : '',
+                                                        link.separator
+                                                            ? 'border-b border-gray-100'
+                                                            : '',
+                                                    ]"
                                                 >
                                                     <a
-                                                        v-if="item.legacy"
-                                                        :href="item.route"
+                                                        v-if="link.legacy"
+                                                        :href="link.route"
                                                         :class="[
                                                             active
                                                                 ? 'bg-gray-100'
                                                                 : '',
                                                             'block px-4 py-2 text-sm text-gray-700',
                                                         ]"
-                                                        >{{ item.name }}</a
+                                                        >{{ link.name }}</a
                                                     >
                                                     <inertia-link
                                                         v-else
+                                                        @click="
+                                                            toggleNavigation(
+                                                                link.route,
+                                                                'more'
+                                                            )
+                                                        "
                                                         :href="
-                                                            route(item.route)
+                                                            route(link.route)
                                                         "
                                                         :class="[
                                                             active
@@ -201,7 +221,7 @@
                                                             'block px-4 py-2 text-sm text-gray-700',
                                                         ]"
                                                         >{{
-                                                            item.name
+                                                            link.name
                                                         }}</inertia-link
                                                     >
                                                 </MenuItem>
@@ -251,7 +271,7 @@
                         <!-- /Notifications Button -->
 
                         <!-- Profile Dropdown -->
-                        <Menu as="div" class="ml-3 relative">
+                        <Menu as="div" class="ml-3 relative z-50">
                             <div>
                                 <MenuButton
                                     class="
@@ -330,7 +350,6 @@
                                         bg-white
                                         ring-1 ring-black ring-opacity-5
                                         focus:outline-none
-                                        divide-y divide-gray-100
                                     "
                                 >
                                     <MenuItem
@@ -344,6 +363,7 @@
                                             px-4
                                             py-2
                                             text-sm text-gray-900
+                                            border-b border-gray-100
                                         "
                                         disabled
                                     >
@@ -366,6 +386,7 @@
                                             px-4
                                             py-2
                                             text-sm text-gray-900
+                                            border-b border-gray-100
                                         "
                                         disabled
                                     >
@@ -382,19 +403,22 @@
                                         </span>
                                     </MenuItem>
                                     <div
-                                        v-for="(links, index) in userNavigation"
+                                        v-for="(link, index) in userNavigation"
                                         :key="index"
                                     >
                                         <MenuItem
-                                            v-for="item in links"
-                                            :key="item.name"
                                             v-slot="{ active }"
+                                            :class="[
+                                                link.separator
+                                                    ? 'border-b border-gray-100'
+                                                    : '',
+                                            ]"
                                         >
-                                            <div v-if="item.method">
+                                            <div v-if="link.method">
                                                 <inertia-link
-                                                    :href="item.href"
-                                                    :method="item.method"
-                                                    :data="item.data"
+                                                    :href="route(link.route)"
+                                                    :method="link.method"
+                                                    :data="link.data"
                                                     as="button"
                                                     :class="[
                                                         active
@@ -403,13 +427,13 @@
                                                         'block w-full text-left px-4 py-2 text-sm text-gray-700',
                                                     ]"
                                                 >
-                                                    {{ item.name }}
+                                                    {{ link.name }}
                                                 </inertia-link>
                                             </div>
                                             <div v-else>
                                                 <a
-                                                    v-if="item.legacy"
-                                                    :href="item.href"
+                                                    v-if="link.legacy"
+                                                    :href="link.route"
                                                     :class="[
                                                         active
                                                             ? 'bg-gray-100'
@@ -421,7 +445,13 @@
                                                 </a>
                                                 <inertia-link
                                                     v-else
-                                                    :href="item.href"
+                                                    @click="
+                                                        toggleNavigation(
+                                                            link.route,
+                                                            'user'
+                                                        )
+                                                    "
+                                                    :href="route(link.route)"
                                                     :class="[
                                                         active
                                                             ? 'bg-gray-100'
@@ -429,7 +459,7 @@
                                                         'block px-4 py-2 text-sm text-gray-700',
                                                     ]"
                                                 >
-                                                    {{ item.name }}
+                                                    {{ link.name }}
                                                 </inertia-link>
                                             </div>
                                         </MenuItem>
@@ -475,14 +505,18 @@
                             </a>
                             <inertia-link
                                 v-else
-                                :href="item.href"
+                                :href="route(item.route)"
                                 :class="[
-                                    item.active
+                                    route().current(item.route)
                                         ? 'bg-light-blue-600 text-white'
                                         : 'text-white hover:bg-light-blue-600 hover:bg-opacity-60',
                                     'block px-3 py-2 rounded-md text-base font-medium',
                                 ]"
-                                :aria-current="item.active ? 'page' : undefined"
+                                :aria-current="
+                                    route().current(item.route)
+                                        ? 'page'
+                                        : undefined
+                                "
                             >
                                 {{ item.name }}
                             </inertia-link>
@@ -496,7 +530,7 @@
                         <template v-for="item in links" :key="item.name">
                             <a
                                 v-if="item.legacy"
-                                :href="item.href"
+                                :href="item.route"
                                 class="
                                     block
                                     px-3
@@ -512,14 +546,18 @@
                             </a>
                             <inertia-link
                                 v-else
-                                :href="item.href"
+                                :href="route(item.route)"
                                 :class="[
-                                    item.active
+                                    route().current(item.route)
                                         ? 'bg-light-blue-600 text-white'
                                         : 'text-white hover:bg-light-blue-600 hover:bg-opacity-60',
                                     'block px-3 py-2 rounded-md text-base font-medium',
                                 ]"
-                                :aria-current="item.active ? 'page' : undefined"
+                                :aria-current="
+                                    route().current(item.route)
+                                        ? 'page'
+                                        : undefined
+                                "
                             >
                                 {{ item.name }}
                             </inertia-link>
@@ -563,137 +601,131 @@ export default {
     },
 
     data() {
-        const navigation = {
-            keyLinks: [
-                {
-                    name: "Dashboard",
-                    route: "dashboard",
-                },
-                {
-                    name: "Grupos",
-                    href: route("localgroups"),
-                    active: route().current("localgroups"),
-                },
-                {
-                    name: "Controle de Acesso",
-                    href: route("access.control"),
-                    active: route().current("access.control"),
-                },
-                {
-                    name: "Firewall",
-                    href: route("firewall"),
-                    active: route().current("firewall"),
-                },
-                {
-                    name: "VPN Empresarial",
-                    href: route("vpns"),
-                    active: route().current("vpns"),
-                },
-                {
-                    name: "Relatórios",
-                    href: route("reports"),
-                    active: route().current("reports"),
-                },
-            ],
-            moreLinks: [
-                [
-                    {
-                        name: "Velocidade",
-                        href: route("traffic_control"),
-                        active: route().current("traffic_control"),
-                    },
-                ],
-                [
-                    {
-                        name: "Redes",
-                        href: route("networks"),
-                        active: route().current("networks"),
-                    },
-                    {
-                        name: "Equipamentos",
-                        href: route("clientips"),
-                        active: route().current("clientips"),
-                    },
-                    {
-                        name: "Usuários",
-                        href: route("users"),
-                        active: route().current("users"),
-                    },
-                ],
-                [
-                    {
-                        name: "Registros DNS locais",
-                        href: route(""),
-                        active: route().current(""),
-                    },
-                    {
-                        name: "Compatibilidade AD",
-                        href: route("conditional_forwarding_dns"),
-                        active: route().current("conditional_forwarding_dns"),
-                    },
-                    {
-                        name: "Endereços MAC liberados",
-                        href: route("ignored_macs"),
-                        active: route().current("ignored_macs"),
-                    },
-                ],
-            ],
-        };
+        const keyLinks = [
+            {
+                name: "Dashboard",
+                route: "dashboard",
+                isActive: false,
+            },
+            {
+                name: "Grupos",
+                route: "localgroups",
+                isActive: false,
+            },
+            {
+                name: "Controle de Acesso",
+                route: "access.control",
+                isActive: false,
+            },
+            {
+                name: "Firewall",
+                route: "firewall",
+                isActive: false,
+            },
+            {
+                name: "VPN Empresarial",
+                route: "vpns",
+                isActive: false,
+            },
+            {
+                name: "Relatórios",
+                route: "reports",
+                isActive: false,
+            },
+        ];
+
+        const moreLinks = [
+            {
+                name: "Velocidade",
+                route: "traffic_control",
+                isActive: false,
+                separator: true,
+            },
+            {
+                name: "Redes",
+                route: "networks",
+                isActive: false,
+            },
+            {
+                name: "Equipamentos",
+                route: "clientips",
+                isActive: false,
+            },
+            {
+                name: "Usuários",
+                route: "users",
+                isActive: false,
+                separator: true,
+            },
+            {
+                name: "Registros DNS locais",
+                route: "custom_dns_record",
+                isActive: false,
+            },
+            {
+                name: "Compatibilidade AD",
+                route: "conditional_forwarding_dns",
+                isActive: false,
+            },
+            {
+                name: "Endereços MAC liberados",
+                route: "ignored_macs",
+                isActive: false,
+            },
+        ];
 
         const userNavigation = [
-            [
-                {
-                    name: "Dados de cliente",
-                    href: route("settings"),
-                    active: route().current("settings"),
+            {
+                name: "Dados de cliente",
+                route: "settings",
+                isActive: false,
+            },
+            {
+                name: "Preferências",
+                route: "settings",
+                isActive: false,
+            },
+            {
+                name: "Log de atividades",
+                route: "settings",
+                isActive: false,
+                separator: true,
+            },
+            {
+                name: "Meus dados",
+                route: "settings",
+                isActive: false,
+            },
+            {
+                name: "Alterar senha",
+                route: "settings",
+                isActive: false,
+            },
+            {
+                name: "Excluir conta",
+                route: "settings",
+                isActive: false,
+                separator: true,
+            },
+            {
+                name: "Onboarding",
+                route: "settings",
+                isActive: false,
+            },
+            {
+                name: "Sair",
+                route: "logout",
+                method: "post",
+                data: {
+                    _token: this.$page.props.csrf_token,
                 },
-                {
-                    name: "Preferências",
-                    href: route("settings"),
-                    active: route().current("settings"),
-                },
-                {
-                    name: "Log de atividades",
-                    href: route("settings"),
-                    active: route().current("settings"),
-                },
-            ],
-            [
-                {
-                    name: "Meus dados",
-                    href: route("settings"),
-                    active: route().current("settings"),
-                },
-                {
-                    name: "Alterar senha",
-                    href: route("settings"),
-                    active: route().current("settings"),
-                },
-                {
-                    name: "Excluir conta",
-                    href: route("settings"),
-                    active: route().current("settings"),
-                },
-            ],
-            [
-                {
-                    name: "Onboarding",
-                    href: route("settings"),
-                    active: route().current("settings"),
-                },
-                {
-                    name: "Sair",
-                    href: route("logout"),
-                    method: "post",
-                    data: {
-                        _token: this.$page.props.csrf_token,
-                    },
-                },
-            ],
+                isActive: false,
+            },
         ];
 
         return {
-            navigation,
+            keyLinks,
+            moreLinks,
             userNavigation,
         };
     },
@@ -711,6 +743,40 @@ export default {
                 "&size=256&background=random&rounded=true&color=random";
 
             event.target.src = imageUrl;
+        },
+
+        toggleNavigation(route, from) {
+            console.log(route, from);
+
+            this.keyLinks.forEach((item) => {
+                item.isActive = false;
+            });
+            this.moreLinks.forEach((item) => {
+                item.isActive = false;
+            });
+            this.userNavigation.forEach((item) => {
+                item.isActive = false;
+            });
+
+            if (from === "key") {
+                this.keyLinks.filter((item) => {
+                    if (item.route === route) {
+                        item.isActive = true;
+                    }
+                });
+            } else if (from === "more") {
+                this.moreLinks.filter((item) => {
+                    if (item.route === route) {
+                        item.isActive = true;
+                    }
+                });
+            } else if (from === "user") {
+                this.userNavigation.filter((item) => {
+                    if (item.route === route) {
+                        item.isActive = true;
+                    }
+                });
+            }
         },
     },
 };
