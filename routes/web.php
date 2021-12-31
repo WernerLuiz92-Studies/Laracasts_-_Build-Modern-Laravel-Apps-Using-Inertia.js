@@ -1,8 +1,9 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\NavbarLinks;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,7 @@ use Inertia\Inertia;
 |
 */
 
+Route::get('/navbar_links', [NavbarLinks::class, 'index'])->name('api.navbar_links');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
