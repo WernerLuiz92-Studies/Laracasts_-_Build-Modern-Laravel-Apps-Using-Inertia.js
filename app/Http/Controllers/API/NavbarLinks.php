@@ -13,28 +13,30 @@ class NavbarLinks extends Controller
         return response(json_encode([
             'key' => [
                 [
-                    'title' => 'Dashboard',
-                    'route' => 'dashboard',
-                ],
-                [
-                    'title' => 'Grupos',
-                    'route' => 'localgroups',
-                ],
-                [
-                    'title' => 'Controle de Acesso',
-                    'route' => 'access.control',
-                ],
-                [
-                    'title' => 'Firewall',
-                    'route' => 'firewall',
-                ],
-                [
-                    'title' => 'VPN Empresarial',
-                    'route' => 'vpns',
-                ],
-                [
-                    'title' => 'Relatórios',
-                    'route' => 'reports',
+                    [
+                        'title' => 'Dashboard',
+                        'route' => 'dashboard',
+                    ],
+                    [
+                        'title' => 'Grupos',
+                        'route' => 'localgroups',
+                    ],
+                    [
+                        'title' => 'Controle de Acesso',
+                        'route' => 'access.control',
+                    ],
+                    [
+                        'title' => 'Firewall',
+                        'route' => 'firewall',
+                    ],
+                    [
+                        'title' => 'VPN Empresarial',
+                        'route' => 'vpns',
+                    ],
+                    [
+                        'title' => 'Relatórios',
+                        'route' => 'reports',
+                    ]
                 ]
             ],
             'more' => [

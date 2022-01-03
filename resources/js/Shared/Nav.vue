@@ -620,7 +620,7 @@ export default {
     },
 
     data() {
-        const keyLinks = this.setKeyLinks(this.navigation.key);
+        const keyLinks = this.setLinks(this.navigation.key);
         const moreLinks = this.setLinks(this.navigation.more);
         const userLinks = this.setLinks(this.navigation.user);
 
@@ -678,31 +678,6 @@ export default {
                     }
                 });
             }
-        },
-
-        setKeyLinks(links) {
-            let keyLinks = [];
-
-            links.forEach((link) => {
-                let keyLink = {
-                    name: link.title,
-                    route: link.route,
-                    isActive: false,
-                };
-
-                if (link.legacy) {
-                    keyLink["legacy"] = true;
-                }
-
-                if (link.method) {
-                    keyLink["method"] = link.method;
-                    keyLink["data"] = link.data ?? {};
-                }
-
-                keyLinks.push(keyLink);
-            });
-
-            return keyLinks;
         },
 
         setLinks(links) {
