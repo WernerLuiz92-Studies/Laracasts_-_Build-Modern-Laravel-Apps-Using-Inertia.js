@@ -474,22 +474,18 @@
 
             <!-- Mobile Menu -->
             <DisclosurePanel class="lg:hidden">
-                <div
-                    class="
-                        px-2
-                        pt-2
-                        pb-3
-                        divide-y divide-gray-100 divide-opacity-20
-                    "
-                >
-                    <div class="mx-2 py-1">
-                        <template
-                            v-for="item in navigation.keyLinks"
-                            :key="item.name"
-                        >
+                <div class="px-2 pt-2 pb-3">
+                    <div
+                        class="
+                            mx-2
+                            py-1
+                            border-b border-gray-100 border-opacity-20
+                        "
+                    >
+                        <template v-for="link in keyLinks" :key="link.name">
                             <a
-                                v-if="item.legacy"
-                                :href="item.href"
+                                v-if="link.legacy"
+                                :href="link.route"
                                 class="
                                     block
                                     px-3
@@ -501,67 +497,66 @@
                                     hover:bg-light-blue-600 hover:bg-opacity-60
                                 "
                             >
-                                {{ item.name }}
+                                {{ link.name }}
                             </a>
                             <inertia-link
                                 v-else
-                                :href="route(item.route)"
+                                @click="toggleNavigation(link.route, 'key')"
+                                :href="route(link.route)"
                                 :class="[
-                                    route().current(item.route)
+                                    link.isActive
                                         ? 'bg-light-blue-600 text-white'
                                         : 'text-white hover:bg-light-blue-600 hover:bg-opacity-60',
                                     'block px-3 py-2 rounded-md text-base font-medium',
                                 ]"
                                 :aria-current="
-                                    route().current(item.route)
-                                        ? 'page'
-                                        : undefined
+                                    link.isActive ? 'page' : undefined
                                 "
                             >
-                                {{ item.name }}
+                                {{ link.name }}
                             </inertia-link>
                         </template>
                     </div>
                     <div
-                        class="mx-2 py-1"
-                        v-for="(links, index) in navigation.moreLinks"
+                        :class="[
+                            link.separator
+                                ? 'border-b border-gray-100 border-opacity-20'
+                                : '',
+                            'mx-2 py-1',
+                        ]"
+                        v-for="(link, index) in moreLinks"
                         :key="index"
                     >
-                        <template v-for="item in links" :key="item.name">
-                            <a
-                                v-if="item.legacy"
-                                :href="item.route"
-                                class="
-                                    block
-                                    px-3
-                                    py-2
-                                    rounded-md
-                                    text-base
-                                    font-medium
-                                    text-white
-                                    hover:bg-light-blue-600 hover:bg-opacity-60
-                                "
-                            >
-                                {{ item.name }}
-                            </a>
-                            <inertia-link
-                                v-else
-                                :href="route(item.route)"
-                                :class="[
-                                    route().current(item.route)
-                                        ? 'bg-light-blue-600 text-white'
-                                        : 'text-white hover:bg-light-blue-600 hover:bg-opacity-60',
-                                    'block px-3 py-2 rounded-md text-base font-medium',
-                                ]"
-                                :aria-current="
-                                    route().current(item.route)
-                                        ? 'page'
-                                        : undefined
-                                "
-                            >
-                                {{ item.name }}
-                            </inertia-link>
-                        </template>
+                        <a
+                            v-if="link.legacy"
+                            :href="link.route"
+                            class="
+                                block
+                                px-3
+                                py-2
+                                rounded-md
+                                text-base
+                                font-medium
+                                text-white
+                                hover:bg-light-blue-600 hover:bg-opacity-60
+                            "
+                        >
+                            {{ link.name }}
+                        </a>
+                        <inertia-link
+                            v-else
+                            @click="toggleNavigation(link.route, 'more')"
+                            :href="route(link.route)"
+                            :class="[
+                                link.isActive
+                                    ? 'bg-light-blue-600 text-white'
+                                    : 'text-white hover:bg-light-blue-600 hover:bg-opacity-60',
+                                'block px-3 py-2 rounded-md text-base font-medium',
+                            ]"
+                            :aria-current="link.isActive ? 'page' : undefined"
+                        >
+                            {{ link.name }}
+                        </inertia-link>
                     </div>
                 </div>
             </DisclosurePanel>
@@ -582,6 +577,7 @@ import {
 } from "@headlessui/vue";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/vue/outline";
 import { ChevronDownIcon } from "@heroicons/vue/solid";
+import route from "../../../vendor/tightenco/ziggy/src/js";
 import Logo from "./Logo";
 
 const axios = require("axios");
@@ -647,8 +643,6 @@ export default {
         },
 
         toggleNavigation(route, from) {
-            console.log(route, from);
-
             this.keyLinks.forEach((item) => {
                 item.isActive = false;
             });
@@ -688,7 +682,7 @@ export default {
                     let newLink = {
                         name: link.title,
                         route: link.route,
-                        isActive: false,
+                        isActive: route().current(link.route),
                     };
 
                     if (link.legacy) {
