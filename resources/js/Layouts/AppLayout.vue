@@ -9,7 +9,14 @@
     <div class="flex flex-col h-screen">
         <section>
             <header>
-                <Nav />
+                <Suspense>
+                    <template #default>
+                        <Nav />
+                    </template>
+                    <template #fallback>
+                        <NavMock />
+                    </template>
+                </Suspense>
             </header>
         </section>
 
@@ -28,11 +35,13 @@
 <script>
 import Nav from "../Shared/Nav";
 import Footer from "../Shared/Footer";
+import NavMock from "../Shared/NavMock";
 
 export default {
     components: {
-        Nav,
-        Footer,
-    },
+    Nav,
+    Footer,
+    NavMock
+},
 };
 </script>
