@@ -577,7 +577,6 @@ import {
 } from "@headlessui/vue";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/vue/outline";
 import { ChevronDownIcon } from "@heroicons/vue/solid";
-import route from "../../../vendor/tightenco/ziggy/src/js";
 import Logo from "./Logo";
 
 const axios = require("axios");
